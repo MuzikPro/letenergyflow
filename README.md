@@ -10,6 +10,8 @@ symptoms, and contains no needling, bloodletting or other invasive technique
 instructions. That boundary is enforced by tests, not by tone — see
 [CONTRIBUTING.md](CONTRIBUTING.md) for the red lines.
 
+![Searching 合谷, focusing LI4 on the atlas, and the 十二經運行 circuit page](docs/demo.gif)
+
 ## What this repository is (and is not)
 
 This is the **open code set** of a project maintained in a private origin
