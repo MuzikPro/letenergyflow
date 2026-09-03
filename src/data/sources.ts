@@ -145,7 +145,7 @@ export const sources: SourceRecord[] = [
     reviewer: 'project owner',
     reviewDate: '2026-08-05',
     notes:
-      'Cited by the owner worksheet as the primary location authority for this pass. Point-location facts are used restated in the project\'s own wording; the standard\'s own text and diagrams are not reproduced. One national standard among several candidate authorities — not treated as the sole project truth.',
+      'Cited by the owner worksheet as the primary location authority for this pass. Point-location facts are used restated in the project\'s own wording; the standard\'s own text and diagrams are not reproduced. One national standard among several candidate authorities — not treated as the sole project truth. Verified 2026-09-03 against the standard\'s text on the official 国家标准全文公开 platform (16-point stratified sample; content-review/gbt-verbatim-audit-2026-09-03.md): the dataset\'s 定位 strings follow the older 2006/textbook register, not this standard\'s 2021 wording — the only character-identical strings are fully formulaic grid locations shared by every source. Restated, not copied; no obstacle to a public release of the dataset.',
   },
   {
     id: 'src_owner_qijing_2026_08',
