@@ -192,12 +192,14 @@ arrangement and annotation of them.
 `vercel.json` deploys with `npm run build:shared`, which after building greps
 every file in `dist/` for model-written strings and fails the deploy if any
 are present — in this repository the model table is empty, so the verifier
-reports exactly that and stays armed. `middleware.ts` is an optional
-Basic-Auth tester gate: it fails **closed**, so a deployment without a
-`TESTER_CREDENTIALS` environment variable (format:
-`user:<sha256-hex>,user:<sha256-hex>`; generate with
-`npx tsx scripts/make-tester-credentials.ts`) denies every request. Delete
-`middleware.ts` for an ungated public deployment.
+reports exactly that and stays armed. The deployment is **ungated**: this is
+a public educational app with no accounts. A tested Basic-Auth gate still
+lives in `src/auth/gate.ts` for anyone deploying a private staging copy —
+restore the thin `middleware.ts` wrapper from git history (it needs
+`@vercel/functions`) and set `TESTER_CREDENTIALS`
+(`user:<sha256-hex>,…`; generate with
+`npx tsx scripts/make-tester-credentials.ts`). The gate fails **closed**:
+without the variable it denies every request.
 
 ## Layout
 
