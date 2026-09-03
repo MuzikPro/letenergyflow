@@ -1,0 +1,3601 @@
+/*
+ * Let Energy Flow — design system.
+ *
+ * Direction: "Atlas Editorial" — a beautifully typeset anatomy journal.
+ * Paper-first light theme leads; warm ink dark theme. Serif display type
+ * (Source Serif 4, OFL — licence in public/fonts/), hairline rules, restrained
+ * jade + terracotta accents. The body figure borrows the "Still Water"
+ * treatment: softly filled silhouette, glow-ring markers, and a breathing
+ * pulse on the active point (disabled under reduced motion).
+ *
+ * Meridians are never distinguished by colour alone — line style, label,
+ * weight and focus ring all carry the same information.
+ */
+
+@font-face {
+  font-family: 'Source Serif 4';
+  font-style: normal;
+  font-weight: 600 700;
+  font-display: swap;
+  src: url('/fonts/source-serif-4-latin.woff2') format('woff2');
+}
+
+:root {
+  color-scheme: light dark;
+
+  /* Paper — the leading theme. */
+  --bg: #faf7f1;
+  --bg-elev: #ffffff;
+  --bg-elev-2: #f2eee6;
+  --line: #ddd6c8;
+  --line-soft: #e9e3d7;
+  --text: #1d1f24;
+  --text-dim: #5a5e55;
+  --text-faint: #8a8676;
+
+  --accent: #2f8f7c;
+  --accent-ink: #ffffff;
+  --accent-soft: rgba(47, 143, 124, 0.11);
+
+  --warn: #b8541f;
+  --warn-soft: rgba(184, 84, 31, 0.09);
+  --danger: #b3372c;
+  --ok: #2c7a4b;
+
+  --mer-lu: #2f8f7c;
+  --mer-li: #b8541f;
+  --mer-st: #8a6d1d;
+  --mer-sp: #a3456d;
+  --mer-ht: #2f5f9f;
+  --mer-si: #6d4ba8;
+  --mer-bl: #1f6b46;
+  --mer-ki: #17708a;
+  --mer-pc: #8a3d6b;
+  --mer-te: #7a5a1f;
+  --mer-gb: #3f6b8a;
+  --mer-lr: #4a7d3f;
+  --mer-cv: #7a6a55;
+  --mer-gv: #55524a;
+
+  --figure-fill: #ede7da;
+  --figure-line: #d9d0bf;
+  /* Face + joint contours: landmark references, so they read stronger than the outline. */
+  --figure-detail: #b0a48c;
+  --glow: 0.13;
+
+  --radius-s: 6px;
+  --radius-m: 10px;
+  --radius-l: 16px;
+
+  --shadow-1: 0 1px 2px rgba(60, 50, 30, 0.06);
+  --shadow-2: 0 16px 40px -18px rgba(60, 50, 30, 0.28);
+
+  --font: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue',
+    'Noto Sans TC', 'PingFang TC', 'Hiragino Sans CNS', 'Microsoft JhengHei', sans-serif;
+  --font-display: 'Source Serif 4', Georgia, 'Songti TC', 'Noto Serif TC', serif;
+  --font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+
+  --tap: 44px;
+  /*
+   * The app's edge gutter. The brand sits on it in the topbar, so any
+   * full-bleed view using the same token has its heading aligned with the logo
+   * by construction rather than by two numbers that happen to agree.
+   */
+  --gutter: 12px;
+
+  /*
+   * The floating detail sheet on a wide screen: its width, and its inset from
+   * the canvas edge. Named because the viewer's controls have to step out from
+   * under it by exactly this much — two numbers that happened to agree would go
+   * out of step the first time the panel was resized.
+   */
+  --sheet-w: 380px;
+  --sheet-gap: 12px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --bg: #15171b;
+    --bg-elev: #1e2126;
+    --bg-elev-2: #262a30;
+    --line: #363a41;
+    --line-soft: #2b2e34;
+    --text: #e8e4da;
+    --text-dim: #a8a49a;
+    --text-faint: #7a776e;
+    --accent: #6fd3bd;
+    --accent-ink: #0c211c;
+    --accent-soft: rgba(111, 211, 189, 0.13);
+    --warn: #e0906a;
+    --warn-soft: rgba(224, 144, 106, 0.12);
+    --danger: #e07a6d;
+    --ok: #7cc79a;
+    --mer-lu: #6fd3bd;
+    --mer-li: #e8956f;
+    --mer-st: #dcbf6e;
+    --mer-sp: #e78fb2;
+    --mer-ht: #86b0e8;
+    --mer-si: #b79bea;
+    --mer-bl: #4fa87a;
+    --mer-ki: #4fc3d9;
+    --mer-pc: #d98ac0;
+    --mer-te: #c9b25f;
+    --mer-gb: #8fb4d6;
+    --mer-lr: #a3d18f;
+    --mer-cv: #d8c9a8;
+    --mer-gv: #b9b4a6;
+    --figure-fill: #22262d;
+    --figure-line: #3a3f48;
+    --figure-detail: #5f6979;
+    --glow: 0.2;
+    --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.4);
+    --shadow-2: 0 16px 40px -16px rgba(0, 0, 0, 0.65);
+  }
+}
+
+:root[data-theme='dark'] {
+  --bg: #15171b;
+  --bg-elev: #1e2126;
+  --bg-elev-2: #262a30;
+  --line: #363a41;
+  --line-soft: #2b2e34;
+  --text: #e8e4da;
+  --text-dim: #a8a49a;
+  --text-faint: #7a776e;
+  --accent: #6fd3bd;
+  --accent-ink: #0c211c;
+  --accent-soft: rgba(111, 211, 189, 0.13);
+  --warn: #e0906a;
+  --warn-soft: rgba(224, 144, 106, 0.12);
+  --danger: #e07a6d;
+  --ok: #7cc79a;
+  --mer-lu: #6fd3bd;
+  --mer-li: #e8956f;
+  --mer-st: #dcbf6e;
+  --mer-sp: #e78fb2;
+  --mer-ht: #86b0e8;
+  --mer-si: #b79bea;
+  --mer-bl: #4fa87a;
+  --mer-ki: #4fc3d9;
+  --mer-pc: #d98ac0;
+  --mer-te: #c9b25f;
+  --mer-gb: #8fb4d6;
+  --mer-lr: #a3d18f;
+  --mer-cv: #d8c9a8;
+  --mer-gv: #b9b4a6;
+  --figure-fill: #22262d;
+  --figure-line: #3a3f48;
+  --figure-detail: #5f6979;
+  --glow: 0.2;
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-2: 0 16px 40px -16px rgba(0, 0, 0, 0.65);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 15px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overscroll-behavior-y: none;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  margin: 0;
+  line-height: 1.18;
+  letter-spacing: -0.01em;
+  font-weight: 650;
+  font-family: var(--font-display);
+  text-wrap: balance;
+}
+
+p {
+  margin: 0 0 0.85em;
+}
+
+a {
+  color: var(--accent);
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  left: 8px;
+  top: -60px;
+  z-index: 100;
+  background: var(--accent);
+  color: var(--accent-ink);
+  padding: 10px 16px;
+  border-radius: var(--radius-s);
+  font-weight: 600;
+  transition: top 0.15s ease;
+}
+.skip-link:focus {
+  top: 8px;
+}
+
+/* ------------------------------- app shell ------------------------------- */
+
+/*
+ * The shell owns the viewport, and scrolling happens INSIDE <main>.
+ *
+ * This used to be `min-height`, which meant nothing below it had a definite
+ * height: a `flex: 1` child sized to its content, `height: 100%` resolved to
+ * auto, and a grid row of `minmax(0, 1fr)` had no fraction to take. Views that
+ * had to fit one screen each worked around it with their own scoped `:has()`
+ * rule — the Flow view, then the network split, and the second one only
+ * surfaced when a 44-station panel dragged a grid row to 2497px and pushed the
+ * map off the page.
+ *
+ * With a definite height here, `flex: 1` and `height: 100%` mean what they say
+ * everywhere, and a view fits the screen simply by not overflowing. Long views
+ * scroll in `main` instead of scrolling the document; the topbar and the nav
+ * are siblings of `main`, so they stay put without needing `position: sticky`
+ * to do it.
+ */
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  height: 100dvh;
+}
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  /* Trimmed from 10px to reclaim vertical canvas; the 38px controls still
+     clear the 44px tap floor because the row's own height carries them. */
+  padding: 6px var(--gutter);
+  padding-top: max(6px, env(safe-area-inset-top));
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.brand {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  min-width: 0;
+}
+.brand strong {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+@media (max-width: 520px) {
+  .brand span {
+    display: none;
+  }
+  .brand {
+    flex: none;
+  }
+  .brand strong {
+    font-size: 15px;
+  }
+  .search-trigger {
+    flex: 1 1 100px;
+  }
+  .search-trigger .kbd {
+    display: none;
+  }
+}
+.brand span {
+  font-size: 11px;
+  color: var(--text-faint);
+  white-space: nowrap;
+}
+
+.topbar-spacer {
+  flex: 1;
+}
+
+.search-trigger {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  flex: 1 1 auto;
+  max-width: 420px;
+  height: 34px;
+  padding: 0 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  background: var(--bg-elev);
+  color: var(--text-dim);
+  cursor: pointer;
+  text-align: left;
+}
+.search-trigger:hover {
+  border-color: var(--accent);
+  color: var(--text);
+}
+.search-trigger .kbd {
+  margin-left: auto;
+}
+
+.kbd {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  padding: 2px 6px;
+  border: 1px solid var(--line);
+  border-bottom-width: 2px;
+  border-radius: 5px;
+  background: var(--bg-elev-2);
+  color: var(--text-faint);
+  white-space: nowrap;
+}
+
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 34px;
+  height: 34px;
+  padding: 0 10px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--bg-elev);
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-dim);
+}
+.icon-btn:hover {
+  color: var(--text);
+  border-color: var(--accent);
+}
+.icon-btn[aria-current='page'] {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.shell-main {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  /* The document no longer scrolls; this does. A view that fits shows no
+     scrollbar, so the one-screen layouts need no special case. */
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+}
+
+.nav {
+  position: sticky;
+  bottom: 0;
+  z-index: 30;
+  display: grid;
+  /*
+   * PHONE BOTTOM BAR. One equal column per destination, whatever the count —
+   * a hardcoded repeat(5, …) wrapped the bar onto two rows the moment a sixth
+   * tab appeared. The two vertical layouts below must each reset
+   * `grid-auto-flow` to row, or this lays their rail out sideways.
+   */
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  gap: 2px;
+  padding: 6px 6px max(6px, env(safe-area-inset-bottom)) 6px;
+  background: color-mix(in srgb, var(--bg) 92%, transparent);
+  backdrop-filter: blur(14px);
+  border-top: 1px solid var(--line-soft);
+}
+
+.nav button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  min-height: var(--tap);
+  padding: 6px 2px;
+  border: 0;
+  border-radius: var(--radius-m);
+  background: transparent;
+  color: var(--text-faint);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+}
+.nav button[aria-current='page'] {
+  color: var(--accent);
+  background: var(--accent-soft);
+}
+.nav .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.85;
+}
+
+/* --------------------------------- cards --------------------------------- */
+
+.panel {
+  background: var(--bg-elev);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-l);
+  padding: 16px;
+  box-shadow: var(--shadow-1);
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.page {
+  padding: 16px 14px 28px;
+  max-width: 1240px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+.muted {
+  color: var(--text-dim);
+}
+.faint {
+  color: var(--text-faint);
+  font-size: 12.5px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 9px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--bg-elev-2);
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--text-dim);
+  white-space: nowrap;
+}
+.chip.code {
+  font-family: var(--font-mono);
+  letter-spacing: 0.02em;
+}
+.chip.warn {
+  border-color: color-mix(in srgb, var(--warn) 45%, var(--line));
+  background: var(--warn-soft);
+  color: var(--warn);
+}
+.chip.accent {
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--line));
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.notice {
+  display: flex;
+  gap: 10px;
+  padding: 11px 13px;
+  border-radius: var(--radius-m);
+  border: 1px solid color-mix(in srgb, var(--warn) 35%, var(--line));
+  background: var(--warn-soft);
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--text-dim);
+}
+.notice strong {
+  color: var(--warn);
+}
+/*
+ * A day's own scope note, under the standing safety notice. Deliberately
+ * quieter: two identically warn-coloured blocks stacked read as one repeated
+ * warning, and the standing notice is the one that has to keep its weight.
+ */
+.notice-day {
+  border-color: var(--line);
+  background: var(--bg-elev-2);
+}
+.notice-day strong {
+  color: var(--text);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: var(--tap);
+  padding: 0 18px;
+  border-radius: var(--radius-m);
+  border: 1px solid var(--line);
+  background: var(--bg-elev);
+  color: var(--text);
+  font-weight: 620;
+  font-size: 14px;
+  cursor: pointer;
+}
+.btn:hover {
+  border-color: var(--accent);
+}
+/* Editorial primary: an ink-filled button, like a well-set book plate. */
+.btn.primary {
+  background: var(--text);
+  border-color: var(--text);
+  color: var(--bg);
+}
+.btn.ghost {
+  background: transparent;
+}
+.btn.small {
+  min-height: 34px;
+  padding: 0 13px;
+  font-size: 12.5px;
+}
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* -------------------------------- search --------------------------------- */
+
+.search-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0;
+  background: color-mix(in srgb, var(--bg) 78%, transparent);
+  backdrop-filter: blur(10px);
+}
+
+.search-panel {
+  width: 100%;
+  max-width: 640px;
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-elev);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-2);
+}
+
+.search-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  padding-top: max(12px, env(safe-area-inset-top));
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.search-head input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  font-size: 17px;
+  outline: none;
+}
+
+.search-scope {
+  padding: 8px 14px;
+  font-size: 11.5px;
+  color: var(--text-faint);
+  border-bottom: 1px solid var(--line-soft);
+  background: var(--bg-elev-2);
+}
+
+.search-results {
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: max(12px, env(safe-area-inset-bottom));
+}
+
+.search-group-title {
+  position: sticky;
+  top: 0;
+  padding: 10px 14px 6px;
+  background: var(--bg-elev);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+.search-item {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  width: 100%;
+  min-height: var(--tap);
+  padding: 9px 14px;
+  border: 0;
+  border-left: 3px solid transparent;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+}
+.search-item:hover,
+.search-item[data-active='true'] {
+  background: var(--bg-elev-2);
+  border-left-color: var(--accent);
+}
+.search-item .primary {
+  font-weight: 620;
+  font-size: 14.5px;
+}
+.search-item .secondary {
+  font-size: 11.5px;
+  color: var(--text-faint);
+}
+.search-item .grow {
+  flex: 1;
+  min-width: 0;
+}
+
+.search-empty {
+  padding: 26px 16px;
+  text-align: center;
+  color: var(--text-faint);
+  font-size: 13px;
+}
+
+/* --------------------------------- atlas --------------------------------- */
+
+.viewer {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  background:
+    radial-gradient(120% 80% at 50% 0%, color-mix(in srgb, var(--accent) 4%, transparent), transparent 60%),
+    var(--bg);
+  touch-action: none;
+  overflow: hidden;
+}
+
+/* DIRECT child only: the legend and caption now contain their own small inline
+   SVGs (line swatches), and a descendant selector would stretch each of them to
+   fill the whole viewer. */
+.viewer > svg {
+  /* Absolute so the SVG's intrinsic viewBox aspect ratio can never inflate
+     the flex column — the viewer sizes to the viewport, never to the figure. */
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: grab;
+}
+.viewer > svg:active {
+  cursor: grabbing;
+}
+
+.viewer-toolbar {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  z-index: 5;
+  /* Slides aside when a sheet opens over it; see the wide-screen block below.
+     The global prefers-reduced-motion rule already flattens this. */
+  transition: right 200ms ease;
+}
+.viewer-toolbar .icon-btn {
+  background: color-mix(in srgb, var(--bg-elev) 88%, transparent);
+  backdrop-filter: blur(8px);
+}
+
+.viewer-legend {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 8px 9px;
+  border-radius: var(--radius-m);
+  border: 1px solid var(--line-soft);
+  background: color-mix(in srgb, var(--bg-elev) 88%, transparent);
+  backdrop-filter: blur(8px);
+  /* The rows carry the FULL channel name, so the type steps down and the name
+     is allowed to wrap rather than being abbreviated away. Enlarged on desktop
+     below, where there is room for it. */
+  font-size: 10.5px;
+  max-width: min(62vw, 202px);
+  /* Ten channels of wrapped names would otherwise run off a phone screen — and
+     there are four more channels still to load. */
+  max-height: calc(100% - 78px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.legend-line {
+  display: flex;
+  align-items: flex-start;
+  gap: 4px;
+}
+.legend-row {
+  display: flex;
+  /* Wrapped names are multi-line, so the swatch aligns to the first line. */
+  align-items: flex-start;
+  /* 8px → 5.5px: the row is label-then-toggle, and the wide gap read as a
+     disconnect between the two rather than as grouping. */
+  gap: 5.5px;
+  border: 0;
+  background: transparent;
+  padding: 3px 0;
+  cursor: pointer;
+  text-align: left;
+  color: var(--text-dim);
+  flex: 1;
+  min-width: 0;
+  border-radius: var(--radius-s);
+}
+.legend-row:hover {
+  color: var(--text);
+}
+.legend-row[aria-pressed='true'] {
+  color: var(--text);
+  font-weight: 620;
+}
+.legend-eye {
+  flex: none;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  color: var(--text-faint);
+  font-size: 11px;
+  padding: 4px 2px 4px 4px;
+  border-radius: var(--radius-s);
+  line-height: 1;
+}
+.legend-eye:hover {
+  color: var(--text);
+}
+.legend-name {
+  min-width: 0;
+  /* Wraps rather than truncates: the channel division at the front of the name
+     is the half a learner is most likely to be checking. */
+  line-height: 1.28;
+}
+.legend-name-alt {
+  display: block;
+  color: var(--text-faint);
+  font-size: 9.5px;
+  line-height: 1.25;
+}
+.legend-count {
+  margin-left: 4px;
+  color: var(--text-faint);
+  white-space: nowrap;
+}
+.legend-swatch {
+  width: 20px;
+  height: 0;
+  margin-top: 6px;
+  border-top-width: 3px;
+  border-top-style: solid;
+  flex: none;
+}
+
+.viewer-caption {
+  /* Sits in the bottom strip rather than spanning the canvas: a full-width bar
+     covered the figure's feet and the points on them.
+
+     `left` is raised past the legend at every width where the legend is open,
+     below. Clearing it horizontally is what makes this reliable — the legend
+     scrolls to whatever height its content needs, so any clearance based on
+     heights holds only until a caption or a channel list grows. */
+  position: absolute;
+  left: 150px;
+  right: auto;
+  bottom: 12px;
+  max-width: min(46vw, 420px);
+  z-index: 5;
+  padding: 7px 11px;
+  border-radius: var(--radius-m);
+  border: 1px solid var(--line-soft);
+  background: color-mix(in srgb, var(--bg-elev) 90%, transparent);
+  backdrop-filter: blur(8px);
+  font-size: 11.5px;
+  color: var(--text-faint);
+  pointer-events: none;
+}
+
+.marker-hit {
+  cursor: pointer;
+}
+/* NOTE: no font-size / stroke-width here on purpose. A CSS declaration beats
+   an SVG presentation attribute, so declaring them would silently override the
+   zoom-aware sizes the atlas computes per label. */
+.marker-label {
+  font-weight: 600;
+  paint-order: stroke;
+  stroke-linejoin: round;
+  pointer-events: none;
+}
+
+/* Still Water figure treatment: glow ring behind every marker, and a slow
+   breathing pulse on the selected point. The global reduced-motion rule
+   freezes the animation. */
+.marker-glow {
+  pointer-events: none;
+}
+.marker-pulse {
+  pointer-events: none;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: marker-breath 2.6s ease-in-out infinite;
+}
+@keyframes marker-breath {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.35);
+    opacity: 0.4;
+  }
+}
+
+/* ------------------------------ detail sheet ----------------------------- */
+
+.sheet {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 20;
+  max-height: 72%;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-elev);
+  border-top: 1px solid var(--line);
+  border-radius: var(--radius-l) var(--radius-l) 0 0;
+  box-shadow: var(--shadow-2);
+}
+.sheet-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 14px 16px 8px;
+}
+/* Detail-sheet text scales with the user's chosen step (--fs, set inline from
+   the fontScale preference; 1 = design default and smallest). */
+.sheet {
+  --fs: 1;
+}
+.sheet-body {
+  overflow-y: auto;
+  padding: 0 16px max(16px, env(safe-area-inset-bottom));
+  font-size: calc(13.5px * var(--fs));
+}
+.sheet h3 {
+  font-size: calc(20px * var(--fs));
+}
+.sheet .faint {
+  font-size: calc(12.5px * var(--fs));
+}
+.sheet .field-label {
+  font-size: calc(10.5px * var(--fs));
+}
+.sheet .provenance {
+  font-size: calc(11px * var(--fs));
+}
+.sheet .provenance code {
+  font-size: calc(10.5px * var(--fs));
+}
+
+.field {
+  padding: 10px 0;
+  border-top: 1px solid var(--line-soft);
+}
+.field-label {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-bottom: 4px;
+}
+.field-missing {
+  color: var(--text-faint);
+  font-style: italic;
+}
+
+.provenance {
+  margin-top: 6px;
+  font-size: 11px;
+  color: var(--text-faint);
+  line-height: 1.5;
+}
+.provenance code {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+}
+
+/* -------------------------------- network -------------------------------- */
+
+/* Same cascade caveat as .marker-label: sizes come from the attributes. */
+.station-label {
+  font-weight: 600;
+  paint-order: stroke;
+  stroke-linejoin: round;
+  pointer-events: none;
+}
+
+/* -------------------------------- practice ------------------------------- */
+
+.flashcard {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-height: 230px;
+  padding: 22px 18px;
+  border-radius: var(--radius-l);
+  border: 1px solid var(--line);
+  background: linear-gradient(180deg, var(--bg-elev) 0%, var(--bg-elev-2) 100%);
+}
+.flashcard .front {
+  font-family: var(--font-display);
+  font-size: 27px;
+  font-weight: 650;
+  letter-spacing: -0.015em;
+}
+.flashcard .back {
+  font-size: 15px;
+  color: var(--text-dim);
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  width: 100%;
+  min-height: var(--tap);
+  padding: 11px 14px;
+  border-radius: var(--radius-m);
+  border: 1px solid var(--line);
+  background: var(--bg-elev);
+  text-align: left;
+  cursor: pointer;
+  font-size: 14.5px;
+}
+.option:hover:not(:disabled) {
+  border-color: var(--accent);
+}
+.option[data-state='correct'] {
+  border-color: var(--ok);
+  background: color-mix(in srgb, var(--ok) 12%, var(--bg-elev));
+}
+.option[data-state='wrong'] {
+  border-color: var(--danger);
+  background: color-mix(in srgb, var(--danger) 12%, var(--bg-elev));
+}
+.option .marker {
+  flex: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  display: grid;
+  place-items: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-faint);
+}
+
+.meter {
+  height: 8px;
+  border-radius: 999px;
+  background: var(--bg-elev-2);
+  overflow: hidden;
+  display: flex;
+}
+.meter span {
+  display: block;
+  height: 100%;
+}
+
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  gap: 10px;
+}
+.stat {
+  padding: 12px 14px;
+  border-radius: var(--radius-m);
+  border: 1px solid var(--line-soft);
+  background: var(--bg-elev-2);
+}
+.stat b {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 25px;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+textarea,
+input[type='text'] {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: var(--radius-m);
+  border: 1px solid var(--line);
+  background: var(--bg);
+  color: var(--text);
+  font: inherit;
+  font-size: 13.5px;
+  resize: vertical;
+}
+
+table.data {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+table.data th,
+table.data td {
+  text-align: left;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--line-soft);
+  vertical-align: top;
+}
+table.data th {
+  font-size: 10.5px;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  font-weight: 700;
+}
+
+.list-reset {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* ------------------------------- responsive ------------------------------ */
+
+/* ------------------------------ navigation ------------------------------- */
+/*
+ * Three behaviours, one element.
+ *
+ *   ≥1024px  persistent left rail that PUSHES the canvas. Collapsible to icons.
+ *   641px–1023px  overlay drawer, opened from the header. Floats over the
+ *            canvas so a tablet in portrait keeps its full working width.
+ *   ≤640px   bottom tab bar. A drawer would put navigation out of thumb reach
+ *            on a phone, and the bar already does not push the canvas.
+ */
+
+.nav-icon {
+  width: 19px;
+  height: 19px;
+  flex: none;
+}
+
+/* `.nav button` sets display:flex, so hiding the toggle needs equal reach —
+   otherwise the chevron joins the phone's five-column bottom bar as a sixth
+   item and wraps the row. */
+.nav .nav-toggle {
+  display: none;
+}
+.nav-toggle svg {
+  width: 15px;
+  height: 15px;
+}
+
+.nav-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 34;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  background: color-mix(in srgb, var(--bg) 55%, transparent);
+  backdrop-filter: blur(2px);
+}
+
+/* The hamburger only exists where the drawer does. */
+.nav-open-btn {
+  display: none;
+}
+
+@media (min-width: 641px) and (max-width: 1023px) {
+  .nav-open-btn {
+    display: inline-flex;
+  }
+  .nav {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 35;
+    width: 172px;
+    height: 100dvh;
+    /* Stacks: undoes the phone bar's column flow, which would otherwise lay
+       the drawer out as a single sideways row. */
+    grid-auto-flow: row;
+    grid-template-columns: 1fr;
+    grid-auto-rows: max-content;
+    align-content: start;
+    gap: 4px;
+    padding: 12px 10px;
+    border-top: 0;
+    border-right: 1px solid var(--line);
+    box-shadow: var(--shadow-2);
+    transform: translateX(-100%);
+    transition: transform 0.18s ease;
+  }
+  .nav[data-open='true'] {
+    transform: translateX(0);
+  }
+  .nav button {
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 10px;
+    min-height: var(--tap);
+    padding: 6px 10px;
+    font-size: 13px;
+  }
+  /* Collapsing is a desktop affordance; a drawer is already out of the way. */
+  .nav .nav-toggle {
+    display: none;
+  }
+}
+
+@media (min-width: 1024px) {
+  .app {
+    flex-direction: row;
+  }
+  .nav {
+    order: -1; /* bottom bar on a phone, left rail on desktop */
+    position: sticky;
+    top: 0;
+    bottom: auto;
+    height: 100dvh;
+    /* Stacks: same reset as the drawer — without it the rail runs sideways
+       across the top of the page. */
+    grid-auto-flow: row;
+    grid-template-columns: 1fr;
+    grid-auto-rows: max-content;
+    align-content: start;
+    gap: 2px;
+    /* 108px → 56px. Wide enough for the glyph and a 3-character label; the
+       long English labels drop a step in size to fit rather than truncate. */
+    width: 56px;
+    flex: none;
+    padding: 8px 4px;
+    border-top: 0;
+    border-right: 1px solid var(--line-soft);
+    transition: width 0.16s ease;
+  }
+  .nav[data-collapsed='true'] {
+    /* Icons only. 44px is the tap-target floor, so this is as narrow as a
+       usable rail goes — a 10px strip would not be clickable. */
+    width: 46px;
+  }
+  .nav[data-collapsed='true'] .nav-label {
+    display: none;
+  }
+  .nav[data-collapsed='true'] button {
+    padding: 8px 2px;
+  }
+  .nav button {
+    min-height: 46px;
+    gap: 3px;
+    padding: 6px 2px;
+    font-size: 10px;
+    line-height: 1.15;
+  }
+  .nav .nav-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 26px;
+    margin-bottom: 4px;
+    border: 0;
+    border-radius: var(--radius-s);
+    background: transparent;
+    color: var(--text-faint);
+    cursor: pointer;
+  }
+  .nav-toggle:hover {
+    color: var(--text);
+    background: var(--bg-elev-2);
+  }
+  .shell-main {
+    /* The shell already owns the viewport height; this only has to fill it. */
+    height: 100%;
+  }
+  .sheet {
+    left: auto;
+    right: var(--sheet-gap);
+    bottom: var(--sheet-gap);
+    top: var(--sheet-gap);
+    width: var(--sheet-w);
+    max-height: none;
+    border-radius: var(--radius-l);
+    border: 1px solid var(--line);
+  }
+  /*
+   * The floating sheet covers the right third of the canvas, and the zoom and
+   * front/back controls sit exactly under it — unreachable on any channel whose
+   * route spans both views, which is most of them: opening 足少陽膽經 and then
+   * being unable to press "back" is the case that surfaced this.
+   *
+   * They slide clear of the sheet rather than moving house. Top-right is where
+   * a map's controls belong, the position is unchanged whenever no sheet is
+   * open, and one variable drives both the panel's width and the distance the
+   * buttons travel, so the two cannot drift apart.
+   */
+  [data-sheet-open='true'] .viewer-toolbar {
+    right: calc(var(--sheet-w) + var(--sheet-gap) * 2);
+  }
+  .search-overlay {
+    padding-top: 8vh;
+  }
+  .search-panel {
+    max-height: 74vh;
+    border-radius: var(--radius-l);
+  }
+  .flashcard {
+    min-height: 280px;
+  }
+}
+
+@media (min-width: 1100px) {
+  .page.split {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(300px, 0.9fr);
+    gap: 20px;
+    align-items: start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ------------------------- extremity detail view ------------------------- */
+/*
+ * The hands and feet are the densest clusters on the atlas. A hotspot on each
+ * one opens a zoomed view that renders the SAME geometry through a tighter
+ * viewBox, so the fine points can carry labels that whole-body zoom must drop.
+ */
+
+.extremity-hotspot {
+  cursor: zoom-in;
+}
+.extremity-hotspot circle {
+  transition: stroke-opacity 0.15s ease, fill-opacity 0.15s ease;
+}
+.extremity-hotspot:hover circle,
+.extremity-hotspot:focus-visible circle {
+  stroke-opacity: 1;
+  fill-opacity: 0.07;
+}
+.hotspot-glyph {
+  pointer-events: none;
+  opacity: 0.55;
+}
+.extremity-hotspot:hover .hotspot-glyph {
+  opacity: 1;
+}
+
+.modal-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: color-mix(in srgb, var(--bg) 72%, transparent);
+  backdrop-filter: blur(6px);
+}
+
+.modal-card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: min(880px, 100%);
+  max-height: min(88dvh, 720px);
+  padding: 18px;
+  overflow: auto;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-l);
+  background: var(--bg-elev);
+  box-shadow: var(--shadow-2);
+}
+
+/*
+ * The lens modal is the one you STUDY in, so it takes as much of the screen as
+ * it can get — the shared 880px card is a dialog size, not a workspace. It is
+ * bounded by the viewport rather than by a fixed multiple: past ~96vw a wider
+ * card would simply be off-screen, so magnification beyond this point comes
+ * from the frame's own zoom camera instead.
+ */
+.modal-card.extremity-detail {
+  width: min(1360px, 96vw);
+  max-height: min(94dvh, 1000px);
+  padding: 20px;
+}
+
+@media (max-width: 760px) {
+  .modal-card.extremity-detail {
+    width: 100%;
+    max-height: 94dvh;
+    padding: 14px;
+  }
+}
+
+.modal-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+.modal-head h2 {
+  font-size: 19px;
+}
+.modal-head p {
+  margin: 3px 0 0;
+  font-size: 12.5px;
+}
+
+/*
+ * The picture is the point of this view, so it takes two thirds. The list
+ * beside it is a legend — codes, names and one line of location — and at half
+ * the modal it was running to luxurious line lengths while the anatomy stayed
+ * small.
+ */
+.extremity-body {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  gap: 16px;
+  /* Stretch, so the list column is exactly as tall as the picture beside it
+     rather than a fixed 420px that ended in dead space under a long frame. */
+  align-items: stretch;
+}
+
+/*
+ * A wide, short frame — the wrist and hand span both of the figure's sides,
+ * because each channel is drawn on one side only — is unreadable in a half
+ * width column: it letterboxes down to a strip. Such a frame takes the full
+ * width and the point list moves underneath it.
+ */
+.extremity-body.lens-wide {
+  grid-template-columns: minmax(0, 1fr);
+}
+.extremity-body.lens-wide .extremity-listwrap {
+  height: 300px;
+}
+
+/*
+ * A bilateral frame on a phone shows its labels small. The answer is the zoom
+ * camera on the frame itself — pinch, or the +/− control — not a wider element
+ * inside a scroller, which would fight the camera's own drag-to-pan.
+ */
+
+.lens-canvas {
+  position: relative;
+}
+
+/* Floating over the frame's corner, clear of the labels along its right edge. */
+.lens-zoom {
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+  display: flex;
+  gap: 6px;
+  padding: 5px;
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-m);
+  background: color-mix(in srgb, var(--bg-elev) 88%, transparent);
+  backdrop-filter: blur(6px);
+}
+.lens-zoom .icon-btn {
+  min-width: 34px;
+  min-height: 34px;
+}
+
+/*
+ * On a phone the frame is only ~300px wide, and a control floating over it
+ * covers the very anatomy it is there to magnify. Below 760px it sits under
+ * the frame as an ordinary row — no overlap, and still a comfortable target.
+ */
+@media (max-width: 760px) {
+  .lens-zoom {
+    position: static;
+    justify-content: center;
+    margin-top: 8px;
+    background: none;
+    backdrop-filter: none;
+    border: 0;
+    padding: 0;
+  }
+  .lens-zoom .icon-btn {
+    min-width: 44px;
+    min-height: 40px;
+  }
+}
+
+.extremity-svg {
+  /*
+   * Bounded on BOTH axes.
+   *
+   * The element's aspect ratio comes from the region's own frame, so a tall
+   * narrow region — the back, 132 x 504 — asked for an element four times
+   * taller than it was wide. With only the width constrained that came out
+   * 1800px tall, overflowed the modal, and showed the learner the top slice of
+   * a giant picture. Sizing from the aspect ratio within both limits keeps the
+   * whole frame on screen whatever shape it is.
+   */
+  width: auto;
+  max-width: 100%;
+  max-height: min(68dvh, 720px);
+  margin: 0 auto;
+  display: block;
+  touch-action: none;
+  /* The ratio comes from the region's own bounding box, set inline. */
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-m);
+  background: var(--bg);
+}
+
+/*
+ * The list column, sized by the picture beside it.
+ *
+ * `min-height: 0` is what lets a grid child actually scroll — without it the
+ * row grows to fit the content instead, and the overflow never happens.
+ */
+.extremity-listwrap {
+  position: relative;
+  min-height: 0;
+}
+
+/*
+ * Taken OUT OF FLOW on purpose.
+ *
+ * Stretching the column alone was not enough: the grid row then grew to the
+ * taller of the two children, and twenty-three points are taller than any
+ * frame, so the list dragged the modal past the bottom of the screen. Out of
+ * flow it contributes no height, the picture alone decides how tall the row
+ * is, and the list fills exactly that.
+ */
+.extremity-list {
+  position: absolute;
+  inset: 0 0 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  /* Reserve the track so content does not shift when the bar appears. */
+  scrollbar-gutter: stable;
+  scrollbar-width: thin;
+  list-style: none;
+}
+
+/*
+ * Make the scrollbar visible.
+ *
+ * macOS hides overlay scrollbars until something moves, so a list that
+ * scrolls looks identical to one that does not. Styling the track opts out of
+ * the overlay behaviour and leaves a permanent, quiet indicator.
+ */
+.extremity-list::-webkit-scrollbar {
+  width: 10px;
+}
+.extremity-list::-webkit-scrollbar-thumb {
+  background: var(--line);
+  border: 3px solid transparent;
+  background-clip: content-box;
+  border-radius: 999px;
+}
+.extremity-list::-webkit-scrollbar-thumb:hover {
+  background: var(--text-faint);
+  background-clip: content-box;
+}
+
+/* A soft edge under the last visible row, so the cut looks deliberate and
+   readable as "there is more" rather than as a clipped list. */
+.extremity-listwrap[data-more]::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 10px;
+  bottom: 22px;
+  height: 44px;
+  pointer-events: none;
+  background: linear-gradient(to bottom, transparent, var(--bg-elev));
+}
+
+.list-more {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: 0;
+  font-size: 11.5px;
+  color: var(--text-faint);
+  text-align: center;
+}
+.extremity-list .row {
+  display: flex;
+  gap: 9px;
+  width: 100%;
+  padding: 7px 9px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-s);
+  background: none;
+  cursor: pointer;
+  text-align: left;
+}
+.extremity-list .row:hover {
+  background: var(--bg-elev-2);
+}
+.extremity-list .row.active {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+.extremity-list .grow {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.extremity-list .primary {
+  font-weight: 600;
+}
+.extremity-list .secondary {
+  font-size: 12px;
+  color: var(--text-dim);
+}
+
+.extremity-note {
+  margin: 0;
+  font-size: 12px;
+}
+
+@media (max-width: 700px) {
+  .extremity-body {
+    grid-template-columns: 1fr;
+  }
+  .extremity-listwrap {
+    height: 260px;
+  }
+}
+
+/* ---------------------------- topic info cards --------------------------- */
+/*
+ * Two-column reading layout: the mapping as plain text on the left, a minimal
+ * avatar with floating annotation boxes on the right.
+ */
+
+.topic-card {
+  padding: 0;
+  overflow: hidden;
+}
+
+.topic-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 13px 15px;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  text-align: left;
+}
+.topic-head h3 {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 15.5px;
+  font-weight: 650;
+}
+.topic-head .secondary {
+  font-size: 12px;
+  color: var(--text-dim);
+  white-space: nowrap;
+}
+.topic-chevron {
+  width: 22px;
+  font-size: 17px;
+  color: var(--text-faint);
+  text-align: center;
+}
+
+.topic-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: 18px;
+  padding: 0 15px 15px;
+  border-top: 1px solid var(--line-soft);
+  padding-top: 13px;
+}
+
+.topic-text p {
+  margin: 0;
+  font-size: 14px;
+}
+.topic-text .framing {
+  font-size: 11.5px;
+  line-height: 1.5;
+}
+
+.mapping-list {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.mapping-list button {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  width: 100%;
+  padding: 6px 8px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-s);
+  background: none;
+  cursor: pointer;
+  text-align: left;
+  font-size: 13.5px;
+}
+.mapping-list button:hover {
+  border-color: var(--line);
+  background: var(--bg-elev-2);
+}
+.mapping-list .from {
+  color: var(--text-dim);
+}
+.mapping-list .arrow {
+  color: var(--text-faint);
+}
+.mapping-list .to {
+  font-weight: 600;
+}
+.mapping-list em {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  font-style: normal;
+  color: var(--text-dim);
+}
+
+.topic-avatar {
+  margin: 0;
+}
+.topic-avatar svg {
+  display: block;
+  width: 100%;
+  max-height: 460px;
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-m);
+  background: var(--bg);
+}
+/*
+ * The route explains the pairing — 「面口合谷收」 only lands once you can see the
+ * channel run from the hand to the face — but the topic's named points are what
+ * the card is about. Hold the line back so it reads as context: it must never
+ * compete with the annotation boxes drawn over it.
+ */
+.topic-routes path {
+  opacity: 0.62;
+}
+.topic-avatar figcaption {
+  margin-top: 6px;
+  font-size: 11.5px;
+  text-align: center;
+}
+
+@media (max-width: 760px) {
+  .topic-body {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* --------------------------- specific-point matrix ----------------------- */
+/*
+ * Every cell is derived from the point records, so this is a VIEW of the data
+ * rather than a second copy of it. Tapping a cell focuses that point, which
+ * drives the atlas camera.
+ */
+
+.matrix-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.matrix-tabs button {
+  padding: 5px 11px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--bg-elev);
+  color: var(--text-dim);
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.matrix-tabs button:hover {
+  color: var(--text);
+  border-color: var(--accent);
+}
+.matrix-tabs button.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
+}
+
+/* Wide tables scroll inside their own box; the page never scrolls sideways. */
+.matrix-scroll {
+  overflow-x: auto;
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-m);
+  background: var(--bg-elev);
+}
+
+.matrix-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12.5px;
+}
+.matrix-table caption {
+  padding: 10px 12px 8px;
+  color: var(--text-dim);
+  font-size: 12px;
+  line-height: 1.45;
+  text-align: left;
+}
+.matrix-table th,
+.matrix-table td {
+  padding: 4px 8px;
+  border-top: 1px solid var(--line-soft);
+  text-align: left;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+.matrix-table thead th {
+  position: sticky;
+  top: 0;
+  background: var(--bg-elev-2);
+  color: var(--text-dim);
+  font-size: 11px;
+  font-weight: 650;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+.matrix-table tbody th {
+  font-weight: 650;
+  color: var(--text);
+}
+
+.mx-swatch {
+  display: inline-block;
+  width: 9px;
+  height: 3px;
+  margin-right: 6px;
+  border-radius: 2px;
+  vertical-align: middle;
+}
+
+.mx-point {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+  width: 100%;
+  padding: 3px 6px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-s);
+  background: none;
+  cursor: pointer;
+  text-align: left;
+}
+.mx-point:hover {
+  border-color: var(--line);
+  background: var(--bg-elev-2);
+}
+.mx-point.active {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+.mx-code {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  color: var(--text-dim);
+}
+.mx-name {
+  font-weight: 600;
+}
+.mx-empty {
+  color: var(--text-faint);
+}
+.mx-chan {
+  color: var(--text-dim);
+}
+.mx-flag {
+  margin-left: 6px;
+  padding: 1px 5px;
+  border-radius: 999px;
+  background: var(--warn-soft);
+  color: var(--warn);
+  font-size: 10px;
+  font-weight: 650;
+  white-space: nowrap;
+}
+/* The one control in the matrix that focuses TWO points at once — a 募俞 pair
+   straddles the front and the back, so no single-point cell can show it. */
+.mx-pair {
+  padding: 2px 8px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--bg-elev-2);
+  color: var(--text-dim);
+  font-size: 11px;
+  font-weight: 650;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.mx-pair:hover {
+  color: var(--text);
+  border-color: var(--accent);
+}
+.mx-pair.active {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 18%, transparent);
+  color: var(--accent);
+}
+
+.matrix-note {
+  margin: 0;
+  font-size: 11.5px;
+}
+
+/* --------------------------- 流注 Flow (子午流注) -------------------------- */
+/*
+ * The clock view. Three columns on a wide screen, stacking to one on a phone,
+ * with the figure first on mobile because it is what the learner came to see.
+ */
+
+.flow-view {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  /*
+   * Was `height: 100%` — the one-screen clock. The circuit section now lives
+   * under the clock, so the view sizes to content and `main` (the app's scroll
+   * container) scrolls it. The one-screen feel is kept by giving the GRID a
+   * definite viewport-derived height below, which its children's percentage
+   * chain also needs — flex distribution collapses against an auto height.
+   */
+  min-height: 100%;
+  /* Same gutter as the topbar, so 子午流注 and the branch heading start on the
+     brand's left edge. */
+  padding: 4px var(--gutter) 5vh;
+}
+.flow-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.flow-head h2 {
+  margin: 2px 0 0;
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+.flow-hours {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-dim);
+  font-variant-numeric: tabular-nums;
+}
+.flow-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12.5px;
+  color: var(--text-dim);
+}
+.flow-live-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: flow-pulse 2.4s ease-in-out infinite;
+}
+@keyframes flow-pulse {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.flow-grid {
+  display: grid;
+  /*
+   * The figure track carries a FLOOR, and the side tracks are capped.
+   *
+   * With `minmax(0, 1fr)` in the middle the two side columns took their
+   * maximums first and the figure got whatever was left: at 834px the resolved
+   * template was `420px 70px 300px`, a 70px slot for the thing the view is
+   * for. The floor makes the figure a first-class track instead of the
+   * remainder.
+   */
+  grid-template-columns: minmax(300px, 400px) minmax(260px, 1fr) minmax(230px, 290px);
+  gap: 10px;
+  /*
+   * Items STRETCH, and each column centres its own content.
+   *
+   * They used to be centred as items (`align-items: center`), which sizes each
+   * column to its content — and a content-sized column is not a definite
+   * height, so the figure's `height: 100%` had nothing to resolve against.
+   * Blink resolves that case anyway; WebKit does not, so on an iPad in
+   * landscape the figure column collapsed to a couple of pixels and the two
+   * bodies vanished. (Portrait was fine because it falls under the 1080px
+   * rules below, which set the height in vh — always definite.)
+   *
+   * Stretched, every column has the row's height, the percentage chain down to
+   * the svg resolves in both engines, and the short columns look the same as before
+   * because they centre their contents themselves.
+   */
+  align-items: stretch;
+  flex: none;
+  /*
+   * Definite, because two things need it. The children's percentage chain
+   * (figure height: 100%) collapses against an auto height, and the circuit
+   * section below the grid must sit UNDER the clock rather than shrink it —
+   * which is what flex distribution did when this was `flex: 1`.
+   * topbar 56 + flow header ≈70 + paddings/gaps ≈22; never under 520px.
+   */
+  height: max(calc(100dvh - 148px), 520px);
+}
+.flow-col {
+  min-width: 0;
+  /* A grid item's default min-height:auto refuses to shrink below its content,
+     which is what pushed the figure past the fold. */
+  min-height: 0;
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+/*
+ * `safe` centring: when the content is TALLER than the column it falls back to
+ * flex-start, so a scrollable panel can still be scrolled to its top. Plain
+ * `center` would push the first rows out of the scrollable area entirely.
+ */
+.flow-ring-col {
+  justify-content: safe center;
+}
+.flow-detail {
+  display: flex;
+  flex-direction: column;
+  /* `safe`: when the panel is taller than the column this falls back to
+     flex-start, so it can still be scrolled to its top. */
+  justify-content: safe center;
+  gap: 8px;
+  /* If the panel is ever taller than the screen it scrolls inside itself,
+     rather than growing the page and breaking the one-screen rule. */
+  overflow-y: auto;
+  /* On top of the view's gutter, so the text is not pressed against the screen
+     edge and the scrollbar has somewhere to sit. */
+  padding-right: 6px;
+}
+
+/* ---- ring ---- */
+.shichen-ring svg {
+  display: block;
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+  touch-action: none; /* the ring owns the drag; the page must not scroll under it */
+}
+.ring-seg path {
+  cursor: pointer;
+  transition: fill 160ms ease;
+}
+.ring-centre-branch {
+  font-size: 17px;
+  font-weight: 700;
+  fill: var(--text);
+}
+.ring-centre-hours {
+  font-size: 11.5px;
+  fill: var(--text-dim);
+  font-variant-numeric: tabular-nums;
+}
+.ring-options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  /* Sized with the dial: it is the same control in list form, and at the old
+     11.5px it read as a footnote beside a 420px ring. */
+  gap: 5px;
+  margin-top: 8px;
+}
+.ring-options:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: var(--radius-s);
+}
+.ring-opt {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  padding: 7px 9px;
+  font-size: 13px;
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-s);
+  background: var(--bg-elev);
+  color: var(--text);
+  cursor: pointer;
+  text-align: left;
+}
+.ring-opt.active {
+  border-color: var(--accent);
+  background: var(--bg-elev-2);
+  font-weight: 600;
+}
+.ring-opt-hours {
+  color: var(--text-dim);
+  font-variant-numeric: tabular-nums;
+}
+.ring-opt-mer {
+  margin-left: auto;
+  font-weight: 700;
+}
+
+/* ---- figure ---- */
+.flow-figure-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+.flow-swipe-hint {
+  font-size: 11px;
+}
+.flow-figure-col {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  height: 100%;
+}
+.flow-figure {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  flex: 1;
+}
+/*
+ * Front and back together. A channel crosses between the two faces — the
+ * Bladder ends at the little toe, 三焦 puts one station on the back — so
+ * showing a single face hides part of whatever is lit.
+ */
+.flow-panels {
+  /*
+   * Flex, not two equal grid columns. The panels take their width from the
+   * figure's aspect ratio, so equal columns left the leftover cell width
+   * sitting between them — a nominal 10px gap rendered as a 97px channel and
+   * the two faces read as separate diagrams. Sized to content and centred, the
+   * gap below is the gap you actually see.
+   */
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  /* 60% of the 97px channel the equal-column layout produced. */
+  gap: 39px;
+  min-height: 0;
+  flex: 1;
+  /* Room for the captions, which now hang below the frames — enough for two
+     lines, since a narrow panel can wrap the longer one. */
+  margin-bottom: 30px;
+}
+.flow-panel {
+  flex: 0 1 auto;
+  position: relative;
+}
+.flow-panel {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  align-items: center;
+}
+.flow-panel figcaption {
+  /*
+   * Taken out of the flow entirely.
+   *
+   * A caption is easily wider than the figure above it — "this channel does not
+   * run on this side" certainly is — and while it was an in-flow child it set
+   * the panel's width, which then showed up as extra space between the two
+   * faces. Measured: hiding it dropped the panel's overhang from 7.5px to 0.
+   * Positioned below the frame instead, so the gap between the faces is exactly
+   * the gap declared above and the figure keeps the panel's full height.
+   */
+  position: absolute;
+  top: calc(100% + 3px);
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 11px;
+  color: var(--text-faint);
+}
+.flow-panel-empty {
+  font-style: italic;
+}
+.flow-panel-empty::before {
+  content: '·';
+  margin: 0 5px;
+  font-style: normal;
+}
+.flow-figure svg {
+  display: block;
+  /*
+   * Height drives the size and the WIDTH follows the aspect ratio, so the
+   * bordered frame hugs the drawing. At width:100% the frame stretched to the
+   * column and the figure floated in the middle of it, letterboxed — which read
+   * as a too-wide canvas even though the body itself was the right size.
+   */
+  height: 100%;
+  width: auto;
+  aspect-ratio: var(--panel-aspect);
+  max-width: 100%;
+  min-height: 0;
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-m);
+  background: var(--bg);
+  /*
+   * Vertical scrolling still belongs to the page; only horizontal movement is
+   * ours. `pan-y` says exactly that, so the swipe never has to preventDefault
+   * and the touch listeners stay passive — which is what keeps the gesture at
+   * 60fps rather than janking the scroll.
+   */
+  touch-action: pan-y;
+}
+.flow-figure.pressed svg {
+  cursor: grabbing;
+}
+.flow-figure-note {
+  margin-top: 6px;
+  font-size: 11.5px;
+  text-align: center;
+}
+.flow-inactive path {
+  opacity: 0.18;
+}
+
+/*
+ * Active channel. The line's dashes travel along the route and the nodes
+ * breathe. Both are pure CSS on the compositor: `stroke-dashoffset` on the
+ * line, `transform`/`opacity` on the nodes. Nothing animates the SVG `r`
+ * attribute — Safari's support for `r` as a CSS property is unreliable, and a
+ * CSS declaration would silently beat the attribute anyway.
+ */
+@keyframes flow-dash {
+  from {
+    stroke-dashoffset: 28;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes flow-breathe {
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: scale(0.55);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.flow-line {
+  animation: flow-dash 3s linear infinite;
+}
+.flow-node-glow {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: flow-breathe 2s ease-in-out infinite;
+}
+
+/* ---- detail ---- */
+.flow-mer {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+.flow-facts {
+  margin: 0;
+  display: grid;
+  gap: 6px;
+}
+.flow-facts > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 13px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid var(--line-soft);
+}
+.flow-facts dt {
+  color: var(--text-dim);
+}
+.flow-facts dd {
+  margin: 0;
+  font-weight: 600;
+}
+.flow-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+.flow-review {
+  font-size: 11.5px;
+  font-style: italic;
+}
+/* A button that reads as a link — the target is a route, not a document. */
+.linklike {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--accent);
+  font: inherit;
+  font-style: normal;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+.linklike:hover {
+  text-decoration-thickness: 2px;
+}
+.flow-hour-note {
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.5;
+}
+.flow-gloss {
+  margin: 0;
+  font-size: 12px;
+  padding-left: 9px;
+  border-left: 2px solid var(--line);
+}
+.flow-solar {
+  font-size: 11.5px;
+}
+.flow-verse {
+  margin: 0;
+  padding: 8px 10px;
+  background: var(--bg-elev-2);
+  border-radius: var(--radius-s);
+}
+.flow-verse blockquote {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 13.5px;
+  line-height: 1.6;
+}
+.flow-verse figcaption {
+  margin-top: 4px;
+  font-size: 11px;
+  color: var(--text-faint);
+}
+
+/*
+ * Below three columns the one-screen rule stops being worth keeping: the
+ * content genuinely needs more room than a laptop's leftover height. From here
+ * the view scrolls normally, which is the honest behaviour on a phone.
+ */
+@media (max-width: 1200px) {
+  .flow-view {
+    height: auto;
+    min-height: 100%;
+  }
+  .flow-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(230px, 290px);
+    /*
+     * Rows size to content, and the grid is not stretched to fill.
+     *
+     * As a flex child with `flex: 1` the grid took a definite height and split
+     * it evenly between its auto rows — 304px each at 1024×768, against a
+     * figure column needing 353. Nothing shrank to fit; the content ran out of
+     * its row and printed over whatever sat below. `align-items` was then
+     * centring inside those wrong rows, which is what made the phone look like
+     * everything had been dealt onto one spot.
+     */
+    grid-auto-rows: min-content;
+    align-items: start;
+    align-content: start;
+    flex: none;
+    height: auto;
+  }
+  .flow-ring-col {
+    grid-column: 1 / -1;
+  }
+  .shichen-ring svg {
+    max-width: 260px;
+  }
+  .ring-options {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .flow-detail {
+    overflow-y: visible;
+  }
+  /*
+   * Size the figures off the VIEWPORT here, not off their parent.
+   *
+   * `.flow-view` is `height: auto` in this band, so `height: 100%` on the svg
+   * is a percentage against an auto-height ancestor — indeterminate. Blink
+   * resolves it through layout anyway; WebKit is entitled not to, and every
+   * browser on iPad is WebKit. There the figures collapsed to zero width and
+   * the page showed two bare rules with the captions turned on their side.
+   * A viewport unit is definite in both engines.
+   */
+  .flow-panels {
+    min-height: 0;
+    /*
+     * Not `stretch`. In this band the panels sit in a ROW, so stretching sets
+     * their HEIGHT to the flex line — which is as short as the cramped column
+     * allows — and the figure was then squeezed into it. Sizing to content lets
+     * the explicit height below stand. (On a phone the row becomes a column, so
+     * stretch only ever touched the width, which is why phones looked fine.)
+     */
+    align-items: flex-start;
+  }
+  .flow-panel {
+    flex: 0 0 auto;
+  }
+  .flow-figure .flow-panel svg {
+    height: 46vh;
+    width: auto;
+    max-width: 100%;
+    /* The svg is itself a flex item; without this it shrinks out of its own
+       declared height rather than keeping it. */
+    flex: none;
+  }
+}
+@media (max-width: 720px) {
+  .flow-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  /* Figure first on a phone: it is what the view is for. */
+  .flow-figure-col {
+    order: -1;
+    height: auto;
+  }
+  .ring-options {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .flow-figure .flow-panel svg {
+    height: 40vh;
+  }
+}
+/*
+ * Two half-width figures below this get too narrow to read, so stack them.
+ * Both stay on screen — the brief's fallback, and the reason the pair is a
+ * vertical stack here rather than a toggle.
+ */
+@media (max-width: 460px) {
+  .flow-panels {
+    flex-direction: column;
+    align-items: center;
+    /* Room for each figure's caption, which hangs below its frame. */
+    gap: 34px;
+    min-height: 0;
+    margin-bottom: 30px;
+  }
+  /*
+   * Stacked, the panels are content-sized, so `height: 100%` has no definite
+   * parent to resolve against and the figures collapsed to a few pixels. Drive
+   * the height directly here and let the aspect ratio give the width.
+   */
+  .flow-figure .flow-panel svg {
+    height: 46vh;
+    width: auto;
+    max-width: 100%;
+  }
+}
+
+/*
+ * Reduced motion: the global rule already collapses animation duration, but a
+ * travelling dash pattern that stops mid-cycle looks like a rendering fault.
+ * Show the active channel as a solid, static highlight instead — the state is
+ * still completely legible without a single frame of movement.
+ */
+@media (prefers-reduced-motion: reduce) {
+  .flow-line {
+    animation: none !important;
+    stroke-dasharray: none !important;
+  }
+  .flow-node-glow {
+    animation: none !important;
+    opacity: 0.85;
+    transform: scale(0.8);
+  }
+  .flow-live-dot {
+    animation: none !important;
+    opacity: 1;
+  }
+}
+
+/* --------------------------- network: line strip -------------------------- */
+/*
+ * One channel, straightened. The overview map fits fourteen routes onto a
+ * portrait canvas and ends up 76% blank on a landscape screen with 4px labels;
+ * a strip gives one line the whole width at a fixed pitch, so every label is
+ * legible without zooming.
+ */
+
+.strip {
+  padding: 10px var(--gutter) 18px;
+  min-width: 0;
+}
+.strip-picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+.strip-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 9px;
+  font-size: 12.5px;
+  border: 1px solid var(--line-soft);
+  border-radius: 999px;
+  background: var(--bg-elev);
+  color: var(--text);
+  cursor: pointer;
+  white-space: nowrap;
+}
+.strip-chip:hover {
+  border-color: var(--line);
+}
+.strip-chip.active {
+  background: var(--bg-elev-2);
+  font-weight: 650;
+  border-width: 2px;
+}
+
+.strip-head {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+.strip-head h3 {
+  margin: 0;
+  font-size: 17px;
+}
+
+.strip-flow {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.strip-neighbour {
+  padding: 4px 9px;
+  font-size: 12px;
+  border: 1px dashed var(--line);
+  border-radius: var(--radius-s);
+  background: none;
+  color: var(--text-dim);
+  cursor: pointer;
+}
+.strip-neighbour:hover {
+  border-style: solid;
+  color: var(--text);
+}
+.strip-nooneighbour {
+  font-size: 12px;
+  font-style: italic;
+}
+
+.strip-scroll {
+  overflow-x: auto;
+  overflow-y: hidden;
+  /* The strip scrolls sideways; the page must not. */
+  overscroll-behavior-x: contain;
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-m);
+  background: var(--bg);
+}
+.strip-scroll svg {
+  display: block;
+}
+.strip-code {
+  font-size: 11px;
+  font-weight: 700;
+  fill: var(--text-dim);
+  font-family: var(--font-mono);
+}
+.strip-name {
+  font-size: 12.5px;
+  fill: var(--text);
+}
+.strip-hit {
+  cursor: pointer;
+}
+.strip-station.active .strip-name,
+.strip-station.active .strip-code {
+  font-weight: 700;
+  fill: var(--accent);
+}
+.strip-station.active circle {
+  filter: drop-shadow(0 0 6px var(--accent));
+}
+.strip-note {
+  font-size: 12px;
+  margin: 0;
+}
+
+/* Note on the left, the atlas handoff on the right; they stack on a phone,
+   where a 46-character sentence and a button will not share a line. */
+.strip-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.strip-foot .strip-note {
+  flex: 1 1 260px;
+}
+/* The border is tinted with the channel's own colour inline, so the resting
+   state already reads as "this button belongs to 肺經". Hover deepens the fill
+   rather than changing the border, which would undo that. */
+.strip-toatlas {
+  flex: 0 0 auto;
+  background: var(--bg-elev-2);
+}
+.strip-toatlas:hover {
+  background: var(--bg-elev);
+  color: var(--text);
+}
+.strip-toatlas > span[aria-hidden] {
+  color: var(--text-dim);
+}
+
+/* The mode switch above the network view. */
+.net-modes {
+  display: inline-flex;
+  gap: 2px;
+  padding: 3px;
+  background: var(--bg-elev-2);
+  border-radius: 999px;
+}
+.net-modes button {
+  padding: 5px 13px;
+  font-size: 12.5px;
+  border: 0;
+  border-radius: 999px;
+  background: none;
+  color: var(--text-dim);
+  cursor: pointer;
+}
+.net-modes button[aria-selected='true'] {
+  background: var(--bg-elev);
+  color: var(--text);
+  font-weight: 650;
+  box-shadow: var(--shadow-1);
+}
+.net-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px var(--gutter) 0;
+  flex-wrap: wrap;
+}
+
+/* ------------------- network: split (overview + line strip) --------------- */
+/*
+ * The map's canvas is 980×2260 — ratio 0.434. In a landscape frame that wastes
+ * 76% of the width; in a portrait column of ~300×690 (ratio 0.435) it fits
+ * almost exactly. So the split is not a compromise between the two views: it is
+ * the shape each one actually wants, side by side.
+ */
+
+.net-view {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  position: relative;
+}
+
+.net-split {
+  display: grid;
+  grid-template-columns: minmax(260px, 320px) minmax(0, 1fr);
+  /*
+   * An explicit row that cannot outgrow the container.
+   *
+   * With an AUTO row the detail sheet's `max-height: 100%` has nothing
+   * definite to resolve against, so it takes its content height — a 44-station
+   * list is ~2500px — the row grows to match, and every column stretches with
+   * it. That pushed the map far below the fold and left the top of the view
+   * blank. `minmax(0, 1fr)` bounds the row to the flex height and lets the
+   * sheet scroll inside itself, which `.sheet-body` already does.
+   */
+  grid-template-rows: minmax(0, 1fr);
+  gap: 12px;
+  flex: 1;
+  min-height: 0;
+  padding: 6px var(--gutter) 10px;
+}
+
+.net-context {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  min-width: 0;
+}
+/* The map fills its column; its own .viewer is a flex child of this box. */
+.net-context .viewer {
+  flex: 1;
+  min-height: 0;
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-m);
+  overflow: hidden;
+}
+.net-context-note {
+  margin: 5px 0 0;
+  font-size: 11px;
+  text-align: center;
+}
+
+.net-detail {
+  min-width: 0;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.net-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.net-hint {
+  font-size: 12px;
+}
+.net-list-btn {
+  position: absolute;
+  left: 10px;
+  bottom: 72px;
+  z-index: 6;
+}
+
+/*
+ * Below this the two columns stop earning their keep: the map column would be
+ * narrower than its own legend text and the strip would lose the width that is
+ * the whole point of it. Stack, strip first, with the map capped so it stays a
+ * reference rather than taking the screen.
+ */
+@media (max-width: 900px) {
+  /*
+   * Stacked, this stops being a grid.
+   *
+   * The row bound above is for the side-by-side layout, where the columns
+   * share one row. Stacked it squeezed the strip into a 182px row and let
+   * 349px of it spill over the map — and `grid-template-rows: auto` did not
+   * fix that, because the strip's own scroll containers give the row almost
+   * nothing to size against. A flex column sizes each panel to its content
+   * without depending on intrinsic contributions through a scroller.
+   */
+  .net-split {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+  }
+  .net-split > * {
+    flex: 0 0 auto;
+  }
+  .net-detail {
+    order: -1;
+    overflow-y: visible;
+  }
+  .net-context {
+    height: 52vh;
+    flex: 0 0 52vh;
+  }
+}
+
+/* ------------- network: the detail sheet pushes instead of floating -------- */
+/*
+ * The sheet is identical everywhere — same component, same styling, same side.
+ * What changes is whether it participates in layout.
+ *
+ * Floating is right over a pannable canvas (atlas, overview map): the camera
+ * can move content out from under it. Over the line strip it is wrong — the
+ * strip is a fixed-height band, so an opaque overlay hides its right-hand end
+ * for good, and scrolling only changes WHICH stations are hidden. In the strip
+ * views the sheet takes a column of its own instead.
+ */
+
+.net-sheet-col {
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  /* The sheet scrolls internally; the column must not grow to its content. */
+  overflow: hidden;
+}
+/* No focus, no panel, no column — DetailPanel renders null. */
+.net-sheet-col:empty {
+  display: none;
+}
+
+.net-line-only {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  /* Same bound as .net-split, for the same reason. */
+  grid-template-rows: minmax(0, 1fr);
+  gap: 12px;
+  flex: 1;
+  min-height: 0;
+  padding: 0 var(--gutter) 10px;
+}
+
+@media (min-width: 1024px) {
+  .net-view[data-sheet='push'] .net-sheet-col .sheet {
+    position: relative;
+    inset: auto;
+    width: 360px;
+    max-height: 100%;
+    /* It sits in the layout now, so it needs no lift off the page. */
+    box-shadow: none;
+  }
+  .net-view[data-sheet='push'] .net-split {
+    grid-template-columns: minmax(240px, 300px) minmax(0, 1fr) auto;
+  }
+}
+
+/*
+ * Narrower than that, a third column would leave the strip unusable, so the
+ * sheet goes back to the bottom-sheet behaviour it has everywhere else on
+ * small screens — it covers the page bottom, and the strip sits above it.
+ */
+@media (max-width: 1023px) {
+  /* Same reasoning as .net-split above. */
+  .net-line-only {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+  }
+  .net-line-only > * {
+    flex: 0 0 auto;
+  }
+}
+
+/*
+ * The channel legend, enlarged on desktop.
+ *
+ * 30% wider (202px → 263px) with the type scaled to match, so the panel grows
+ * without re-wrapping: swatch to name, name to count, row to gutter all keep
+ * their ratio and the reading rhythm is unchanged, just larger. Scaling the box
+ * alone would have left the text stranded inside it.
+ *
+ * Only from 1024px, because the cap is a share of a phone's screen: 263px of a
+ * 375px viewport is 70% of it, and this panel floats OVER the figure. Phones
+ * keep the size they were tuned at.
+ *
+ * Applies to the network map too — it is the same panel, and the two views are
+ * meant to read as one design.
+ */
+@media (min-width: 641px) {
+  /* The legend stops collapsing here and is always drawn open, so the caption
+     has to start after it. Below this width the legend is a pill and the
+     caption keeps the whole bottom-left corner. */
+  .viewer-caption {
+    left: calc(10px + min(62vw, 202px) + 12px);
+  }
+}
+
+@media (min-width: 1024px) {
+  .viewer-legend {
+    font-size: 13.5px;
+    max-width: 263px;
+    padding: 8px 12px;
+  }
+  .viewer-caption {
+    left: 285px;
+  }
+  /* With the sheet floating over the right third, the caption is bounded on
+     both sides — so it is given both edges and allowed to fill what is left
+     rather than a max-width that could still reach under the sheet at 1024. */
+  [data-sheet-open='true'] .viewer-caption {
+    right: calc(var(--sheet-w) + var(--sheet-gap) * 2);
+    max-width: none;
+  }
+  .viewer-legend .legend-row {
+    gap: 7px;
+  }
+  .viewer-legend .legend-swatch {
+    width: 26px;
+    margin-top: 7px;
+  }
+  .viewer-legend .legend-eye {
+    font-size: 14px;
+    padding: 5px 3px 5px 5px;
+  }
+  .viewer-legend .legend-name-alt {
+    font-size: 12px;
+  }
+
+  /*
+   * Bilingual rows carry a second line, which pushed fourteen channels 38px
+   * past the panel on a 900px-tall window. The space comes back from the rows
+   * that actually have the extra line — `:has()` leaves single-language
+   * spacing exactly as it was — and from the leading of that second line,
+   * which is a caption under a label and does not need a full 1.25.
+   *
+   * Reclaims ~55px: 28 from row padding, 14 from the leading, 13 from the
+   * stack gap. Rows stay 36px, so they are no harder to hit.
+   */
+  .viewer-legend:has(.legend-name-alt) {
+    gap: 5px;
+  }
+  .viewer-legend .legend-row:has(.legend-name-alt) {
+    padding: 2px 0;
+  }
+  .viewer-legend .legend-name-alt {
+    line-height: 1.15;
+  }
+}
+
+/* ------------------------------ back control ----------------------------- */
+/*
+ * Sits left of the brand and only when there is somewhere to go back to, so
+ * the topbar is unchanged on a first landing. It names its destination — "←
+ * Network" says where you would end up, which a bare arrow does not.
+ */
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  flex: none;
+  white-space: nowrap;
+}
+@media (max-width: 640px) {
+  /* The arrow alone on a phone; the label would crowd out the search field. */
+  .back-btn-label {
+    display: none;
+  }
+  /*
+   * And while the back control is showing, the wordmark stands down.
+   *
+   * Even at 40px the arrow squeezed the search trigger to 88px with its
+   * placeholder truncated to 45px — a stub. Mid-journey the learner knows
+   * which app they are in; being able to read the search field matters more,
+   * and the wordmark returns as soon as there is nothing to go back to.
+   */
+  .topbar:has(.back-btn) .brand {
+    display: none;
+  }
+}
+
+/* ----------------------- legend: collapsible on phones -------------------- */
+/*
+ * The legend floats OVER the figure. On a wide screen that is free real estate
+ * in a corner; on a phone it was 202px of a 375px viewport at nearly full
+ * height, covering the body it describes. Below 640px it collapses to its own
+ * heading and opens on a tap — the figure is the content, the legend is a
+ * control, and a control should not sit on top of the content by default.
+ *
+ * Above 640px nothing changes: the toggle renders as the heading it already
+ * was, and the body is always open.
+ */
+
+.legend-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.legend-toggle .eyebrow {
+  margin: 0;
+}
+.legend-toggle-count,
+.legend-chevron {
+  display: none;
+}
+.legend-body {
+  display: flex;
+  flex-direction: column;
+  gap: inherit;
+}
+
+@media (max-width: 640px) {
+  .legend-toggle {
+    /* A comfortable tap target when it is the only thing showing. */
+    min-height: 30px;
+  }
+  .legend-toggle-count,
+  .legend-chevron {
+    display: inline;
+    color: var(--text-faint);
+    font-size: 11px;
+  }
+  .legend-toggle-count {
+    margin-left: auto;
+  }
+  .viewer-legend[data-open='false'] {
+    /* Just the pill: no list, no reserved height over the figure. */
+    max-height: none;
+    width: auto;
+  }
+  .viewer-legend[data-open='false'] .legend-body {
+    display: none;
+  }
+  .viewer-legend[data-open='true'] {
+    /* Open, it may cover the figure — that is the point of opening it — but it
+       still stops short of the toolbar and scrolls within itself. */
+    max-height: calc(100% - 78px);
+  }
+}
+
+/* --------------------------------------------------------------------------
+ * Region detail sessions.
+ *
+ * A card per body region, each showing how many points it holds and which
+ * channels cross it. Both numbers are counted from the data at render time, so
+ * a card cannot claim a point the atlas does not have.
+ * ----------------------------------------------------------------------- */
+
+.region-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(232px, 1fr));
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.region-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  height: 100%;
+  padding: 14px;
+  text-align: left;
+  background: var(--bg-elev);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-l);
+  box-shadow: var(--shadow-1);
+  cursor: pointer;
+  color: inherit;
+  font: inherit;
+}
+.region-card:hover {
+  border-color: var(--line);
+}
+.region-card:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.region-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.region-card-head .primary {
+  font-family: var(--font-display);
+  font-size: 15.5px;
+  font-weight: 650;
+}
+
+/* One rail per channel crossing the region — the map's colours, read as a
+   density at a glance rather than as a list to be read. */
+.region-rails {
+  display: flex;
+  gap: 3px;
+  height: 4px;
+}
+.region-rail {
+  flex: 1;
+  border-radius: 2px;
+  min-width: 6px;
+}
+
+.region-landmarks {
+  font-size: 12.5px;
+  line-height: 1.5;
+  flex: 1;
+}
+.region-count {
+  font-size: 11.5px;
+  color: var(--text-faint);
+}
+
+/* Header controls for the magnifier — the view toggle sits beside Close. */
+.lens-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: none;
+}
+
+/* --------------------------------------------------------------------------
+   Course index — the twenty-six days as one table.
+   The day strip it replaced wrapped to four lines on a phone, so this lives
+   behind a disclosure and the common step-by-one move stays outside it.
+   -------------------------------------------------------------------------- */
+
+.day-stepper {
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.course-index-disclosure {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.course-index-disclosure > summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 11px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--bg-elev-2);
+  color: var(--text-dim);
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  user-select: none;
+}
+.course-index-disclosure > summary:hover {
+  color: var(--text);
+  border-color: var(--line-strong, var(--line));
+}
+.course-index-disclosure[open] > summary {
+  margin-bottom: 10px;
+}
+
+.course-index {
+  display: grid;
+  gap: 8px;
+  /* Five columns of a 26-row table will not fit a phone; the table scrolls
+     inside this box rather than the page scrolling sideways. */
+  max-width: 100%;
+}
+.course-index > table {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  border-collapse: collapse;
+  font-size: 12.5px;
+}
+.course-index th,
+.course-index td {
+  padding: 5px 9px;
+  border-top: 1px solid var(--line-soft);
+  text-align: left;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+.course-index thead th {
+  color: var(--text-dim);
+  font-size: 11px;
+  font-weight: 650;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  border-top: 0;
+}
+.course-index td.num,
+.course-index th.num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.course-index tr[aria-current='true'] {
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+}
+.course-index .course-rails {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+}
+/* The subject is the long column; it may wrap rather than force a wide table. */
+.course-index td .subject {
+  display: inline-block;
+  max-width: 46ch;
+  white-space: normal;
+  text-align: left;
+  line-height: 1.35;
+}
+
+.linky {
+  border: 0;
+  padding: 0;
+  background: none;
+  color: var(--text);
+  font: inherit;
+  cursor: pointer;
+}
+.linky:hover {
+  color: var(--accent);
+  text-decoration: underline;
+}
+.linky.current {
+  font-weight: 700;
+  color: var(--accent);
+}
+.chip.linky {
+  padding: 3px 9px;
+  color: var(--text-dim);
+}
+.chip.linky:hover {
+  text-decoration: none;
+  border-color: var(--accent);
+}
+
+/* 傳統功效與主治 — the one block on a point sheet that could be misread as
+   advice, so it is set apart: a tinted rule down the side, and its framing
+   sentence sitting above the content rather than once at the top of the sheet
+   where a reader has already scrolled past it. */
+.field-traditional {
+  padding-left: 10px;
+  border-left: 2px solid color-mix(in srgb, var(--warn) 55%, var(--line));
+}
+.indications-framing {
+  margin: 0 0 8px;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+/* An unsourced claim must not read like a merely unreviewed one: this is the
+   only content in the app never read out of a document. One mark, identical on
+   every point, standing for a sentence that lives once on the disclaimer page —
+   the paragraph repeated beside 609 fields had become scenery. */
+.unsourced-mark {
+  position: relative;
+  cursor: pointer;
+  border-style: dashed;
+}
+/*
+ * The chip renders at 25px tall, which is right for a badge sitting in a line
+ * of type and wrong for a finger — this project sets --tap: 44px and means it.
+ * A transparent overlay extends the hit area to ~45x67 without moving anything
+ * on screen; making the badge itself 44px would have it looming over the very
+ * content it annotates. It is the only route to the explanation, so it has to
+ * be reachable on a phone.
+ */
+.unsourced-mark::after {
+  content: '';
+  position: absolute;
+  inset: -10px -6px;
+}
+.unsourced-mark:hover,
+.unsourced-mark:focus-visible {
+  border-style: solid;
+  background: color-mix(in srgb, var(--warn) 16%, transparent);
+}
+
+/* --------------------------------------------------------------------------
+   Course index on a phone.
+
+   The day and subject links render 19px tall — right for a dense table read
+   with a mouse, and about half of this project's own --tap: 44px. The cell
+   around them is bigger, so a tap that looks like a hit lands on padding and
+   does nothing, which reads as the app ignoring you.
+
+   The link fills its cell vertically instead of an invisible overlay: adjacent
+   rows are ~29px apart, so an overlay big enough to matter would reach into the
+   row above and select the wrong day.
+   -------------------------------------------------------------------------- */
+
+/* --------------------------------------------------------------------------
+   Tap targets on a phone.
+
+   This project sets --tap: 44px and `.btn` honours it, but almost every
+   smaller primitive had drifted below: 34px for the topbar search, the icon
+   buttons and `.btn.small`, 31px for the strip chips and the matrix tabs, 27px
+   for the 60 matrix cells, 18px for an inline `.linklike`. Each was a
+   reasonable size read with a mouse and about half a fingertip.
+
+   Applied to any COARSE pointer, and to any viewport under 1024px.
+
+   Width alone was the wrong test and an iPad in portrait proved it: at 768px
+   neither the phone rules nor the desktop rules matched, so a touch device got
+   19px day links and 27px matrix cells. Tap size is a question about the
+   pointer, not the window. The width arm is kept because it is the one that
+   can be verified in a desktop browser at a resized viewport — `pointer:
+   coarse` cannot be, so a tablet in LANDSCAPE relies on the arm this project
+   has not been able to test directly.
+
+   Above 1024px with a fine pointer the density is deliberate and unchanged.
+
+   Two are handled with an overlay instead of a height, because their size is
+   what makes them legible: an inline text link inside a sentence, and the
+   無出處 badge that sits in a line of type. Growing those to 44px would push
+   the prose around them apart.
+   -------------------------------------------------------------------------- */
+@media (pointer: coarse), (max-width: 1023px) {
+  .skip-link,
+  .search-trigger,
+  .btn.small,
+  .strip-chip,
+  .strip-neighbour,
+  .matrix-tabs button,
+  .course-index-disclosure > summary,
+  .course-index td .linky,
+  .net-modes button,
+  .legend-toggle,
+  .strip-toatlas,
+  .option {
+    min-height: var(--tap);
+  }
+
+  .icon-btn {
+    min-width: var(--tap);
+    height: var(--tap);
+  }
+
+  /* Padding as well as height, so the text has room rather than sitting in a
+     taller box. Only the short day link is stretched to fill its cell —
+     stretching the subject too wrapped titles to 123px a row. */
+  .course-index td .linky:not(.chip) {
+    padding: 11px 0;
+  }
+  .course-index td .linky:not(.chip):not(.subject) {
+    display: block;
+    width: 100%;
+  }
+  .course-index td .chip.linky {
+    padding: 10px 12px;
+  }
+
+  /* 60 cells across the specific-point matrix. The tables already scroll
+     inside their own box, so taller rows cost scrolling rather than layout. */
+  .mx-point,
+  /* Teaching-topic mappings, the same shape one card down. */
+  .mapping-list button {
+    min-height: var(--tap);
+    align-items: center;
+  }
+
+  /* Inline in a sentence: give it the hit area without giving it the height,
+     or the line it sits in opens up around it. */
+  .linklike {
+    position: relative;
+  }
+  .linklike::after {
+    content: '';
+    position: absolute;
+    inset: -13px -4px;
+  }
+}
+
+/*
+ * The course index's title column, on a narrow screen only.
+ *
+ * The subject is the only wrapping cell, so the table gave the nowrap columns
+ * their full width and squeezed it to 56px — day titles wrapped two characters
+ * to a line. A floor fixes that, and the table already scrolls sideways inside
+ * its own box, so the cost is scroll rather than a squeezed column. Width, not
+ * pointer: by 768px the column has room on its own, and this is a layout
+ * problem rather than a reach problem.
+ */
+@media (max-width: 767px) {
+  .course-index td .subject {
+    min-width: 200px;
+    max-width: none;
+  }
+}
+
+/* --------------------------------------------------------------------------
+ * Legend group filters.
+ *
+ * Fourteen eyes could only be switched one at a time; these switch the sets a
+ * learner actually asks for. Laid out as wrapping chip rows so the panel keeps
+ * its width on a phone, where it is already collapsed by default.
+ * -------------------------------------------------------------------------- */
+.legend-groups {
+  display: grid;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+.legend-group-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.legend-groups .strip-chip {
+  padding: 4px 7px;
+  font-size: 11.5px;
+}
+.legend-group-label {
+  font-size: 10.5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-faint, var(--text));
+  opacity: 0.65;
+  margin-top: 4px;
+}
+
+/* --------------------------------------------------------------------------
+ * 十二經運行 — the circuit on the Flow page.
+ *
+ * Two colour tokens, not fourteen: the diagram is about the yin/yang RULE, and
+ * per-channel colour would bury the one distinction it exists to show. The
+ * channel colours appear only on the chips underneath, where the twelve are
+ * the subject.
+ * -------------------------------------------------------------------------- */
+:root {
+  --circuit-yin: #2f9e8f;
+  --circuit-yang: #c25b4e;
+}
+.flow-circuit-panel {
+  display: grid;
+  gap: 6px;
+  padding: 10px 0 2px;
+  border-top: 1px solid var(--line-soft);
+}
+.flow-circuit-seat {
+  margin: 0;
+  font-size: 13px;
+}
+.flow-circuit-toggle {
+  display: flex;
+  gap: 5px;
+}
+.flow-circuit-section {
+  max-width: 720px;
+  margin: 18px auto 0;
+  padding: 0 var(--gutter) 28px;
+}
+.flow-circuit-title {
+  font-size: 17px;
+  margin: 0 0 4px;
+}
+.flow-circuit-lede {
+  margin: 0 0 12px;
+}
+.circuit svg {
+  width: min(100%, 380px);
+  display: block;
+  margin: 0 auto;
+}
+.circuit-station {
+  fill: var(--bg-elev);
+  stroke: var(--line);
+  stroke-width: 1.2;
+}
+.circuit-station-label {
+  fill: var(--text);
+  font-size: 14px;
+  font-weight: 650;
+}
+/* The march: dashes travel in path direction, so flow reads as motion. The
+   distance is one dash period (9+7), so the loop is seamless. */
+.circuit-march {
+  animation: circuit-march 0.9s linear infinite;
+}
+@keyframes circuit-march {
+  from { stroke-dashoffset: 16; }
+  to { stroke-dashoffset: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .circuit-march { animation: none; }
+}
+.circuit-caption {
+  min-height: 44px;
+  text-align: center;
+  margin-top: 6px;
+}
+.circuit-quote {
+  margin: 0;
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  align-items: baseline;
+  flex-wrap: wrap;
+}
+.circuit-quote-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 2px;
+  font-size: 13px;
+}
+.circuit-rule {
+  margin: 4px 0 0;
+}
+.circuit-laps {
+  display: grid;
+  gap: 5px;
+  margin-top: 12px;
+}
+.circuit-lap-row {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.circuit-lap-row.faint,
+.circuit-caption .faint {
+  opacity: 0.45;
+}
+.circuit-chip {
+  border: 1.4px solid var(--line);
+  border-radius: 7px;
+  background: var(--bg-elev);
+  padding: 4px 8px;
+  font-size: 12.5px;
+  font-weight: 650;
+  cursor: pointer;
+  min-height: 30px;
+}
+.circuit-chip[data-active] {
+  outline: 2px solid var(--accent);
+  outline-offset: 1.5px;
+}
+.circuit-attrib {
+  margin: 12px 0 0;
+  text-align: center;
+}
+@media (pointer: coarse), (max-width: 1023px) {
+  .circuit-chip {
+    min-height: var(--tap);
+    padding: 8px 12px;
+  }
+}
+.circuit-standing {
+  font-size: 11.5px;
+  color: var(--text-faint);
+  min-width: 26px;
+}
+
+/* 十二經運行 — the dedicated page. */
+.circuit-view {
+  max-width: 760px;
+  margin: 0 auto;
+}
+.circuit-page-toggle {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+.circuit-body {
+  width: min(100%, 480px);
+  display: block;
+  margin: 0 auto;
+}
+.circuit-pose-note {
+  fill: var(--text-dim);
+  font-size: 14px;
+  letter-spacing: 0.14em;
+}
+.circuit-seg-label {
+  fill: var(--text-dim);
+  font-size: 12.5px;
+}
+.circuit-flank {
+  fill: var(--text-dim);
+  font-size: 14.5px;
+  font-weight: 650;
+}
+
+/* The 口訣 lines placed on the figure itself. */
+.circuit-quote-inline {
+  font-size: 13.5px;
+  font-weight: 650;
+}
+.circuit-quote-inline.pinned {
+  font-size: 15px;
+}
+.circuit-quote-gloss {
+  font-size: 10.5px;
+  font-weight: 500;
+  opacity: 0.75;
+}
+.circuit-quote-list .pinned {
+  font-weight: 700;
+}

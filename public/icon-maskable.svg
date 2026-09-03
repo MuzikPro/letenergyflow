@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Let Energy Flow">
+  <rect width="512" height="512" fill="#0e1116" />
+  <g fill="none" stroke-linecap="round" stroke-width="20" transform="translate(0,0) scale(0.78) translate(72,72)">
+    <path d="M150 118 C150 220 118 262 118 330 C118 372 138 396 168 396" stroke="#5eead4" />
+    <path d="M362 118 C362 220 394 262 394 330 C394 372 374 396 344 396" stroke="#fca5a5" />
+  </g>
+  <g fill="#f7f5f0" transform="scale(0.78) translate(72,72)">
+    <circle cx="150" cy="118" r="24" />
+    <circle cx="118" cy="330" r="18" />
+    <circle cx="168" cy="396" r="18" />
+    <circle cx="362" cy="118" r="24" />
+    <circle cx="394" cy="330" r="18" />
+    <circle cx="344" cy="396" r="18" />
+  </g>
+</svg>

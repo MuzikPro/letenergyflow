@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Let Energy Flow">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0e1116" />
+      <stop offset="1" stop-color="#1b2430" />
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="url(#g)" />
+  <g fill="none" stroke-linecap="round" stroke-width="22">
+    <path d="M150 118 C150 220 118 262 118 330 C118 372 138 396 168 396" stroke="#5eead4" />
+    <path d="M362 118 C362 220 394 262 394 330 C394 372 374 396 344 396" stroke="#fca5a5" />
+  </g>
+  <g fill="#f7f5f0">
+    <circle cx="150" cy="118" r="26" />
+    <circle cx="118" cy="330" r="20" />
+    <circle cx="168" cy="396" r="20" />
+    <circle cx="362" cy="118" r="26" />
+    <circle cx="394" cy="330" r="20" />
+    <circle cx="344" cy="396" r="20" />
+  </g>
+</svg>
