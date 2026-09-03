@@ -207,8 +207,8 @@ export const curriculumDays: CurriculumDay[] = [
         reviewStatus: 'unreviewed',
         body: [
           {
-            zhHant: '胃經路線口訣：「臉部繞行胸四寸，腹部旁開二寸行，腿前正中到次趾。」',
-            en: 'The route rhyme: face loop — chest at four cun — abdomen at two — down the front of the leg to the second toe.',
+            zhHant: '胃經路線口訣（本專案自編）：「繞面一圈下胸腹，胸旁四寸腹二寸，腿前直落次趾端。」',
+            en: 'The route rhyme (project-composed): a loop around the face, then down the trunk — 4 cun out on the chest, 2 on the abdomen — and straight down the front of the leg to the second toe.',
           },
           {
             zhHant:
@@ -818,8 +818,8 @@ export const curriculumDays: CurriculumDay[] = [
     dayNumber: 8,
     titleZhHant: '足少陽膽經（側線部隊）',
     titleEn: 'Gallbladder meridian — the side line',
-    hookZhHant: '身體兩側，從頭到腳，像褲線。44 穴裡有 20 穴在頭上——今天先把頭上那一段的路線走順。',
-    hookEn: 'Down the side of the body from head to foot, like the seam of a trouser leg. Twenty of its forty-four points are on the head, so start by learning the path they take.',
+    hookZhHant: '沿身體外側走一條長線，自頭角折返而下，直到第四趾。44 穴裡有 20 穴在頭上——今天先把頭上那一段的路線走順。',
+    hookEn: 'One long line down the outside of the body, zig-zagging from the temple all the way to the fourth toe. Twenty of its forty-four points are on the head, so start by learning the path they take.',
     meridianIds: ['mer_gb'],
     sourceIds: [WORKSHEET8, OUTLINE, LINGSHU],
     reviewStatus: 'source_checked',
@@ -4495,8 +4495,8 @@ export const flashcards: Flashcard[] = [
     'route_recall',
     '胃經的路線口訣是什麼？起點與終點在哪？',
     'Recite the Stomach-channel route rhyme. Where does the channel start and end?',
-    '「臉部繞行胸四寸，腹部旁開二寸行，腿前正中到次趾。」起於承泣（眼下），止於厲兌（足第二趾），共 45 穴。',
-    'Face loop — chest at 4 cun — abdomen at 2 cun — front of the leg to the second toe. Starts at 承泣 (ST1, below the eye), ends at 厲兌 (ST45, second toe) — 45 points.',
+    '「繞面一圈下胸腹，胸旁四寸腹二寸，腿前直落次趾端。」起於承泣（眼下），止於厲兌（足第二趾），共 45 穴。',
+    'A loop around the face, down the trunk — 4 cun on the chest, 2 on the abdomen — front of the leg to the second toe. Starts at 承泣 (ST1, below the eye), ends at 厲兌 (ST45, second toe) — 45 points.',
     ['pt_st1', 'pt_st45'],
     ['mer_st'],
     [HANDBOOK, OUTLINE],
@@ -6751,7 +6751,7 @@ export const quizItems: QuizItem[] = [
     ],
     correctOptionId: 'b',
     targetAcupointId: null,
-    explanationZhHant: '口訣是「臉部繞行胸四寸，腹部旁開二寸行」：胸部旁開 4 寸，到腹部收窄為旁開 2 寸。',
+    explanationZhHant: '口訣是「胸旁四寸腹二寸」：胸部旁開 4 寸，到腹部收窄為旁開 2 寸。',
     explanationEn: 'The rhyme runs chest at 4 cun, abdomen at 2 cun — the line steps inward as it descends the trunk.',
     relatedAcupointIds: ['pt_st25'],
     sourceIds: [HANDBOOK, OUTLINE],

@@ -487,9 +487,9 @@ export const editorialByCode: Record<string, EditorialPoint> = {
     '在腹部，橫平臍中，前正中線旁開 2 寸。',
     'On the abdomen level with the centre of the umbilicus, 2 cun lateral to the anterior midline.',
     ['front_mu', 'crossing'],
-    '肚臍旁的「大腸情報站」——肚臍＝生命中心，旁開 2 寸＝大腸的門牌號。',
-    'Celestial Pivot: the Large-Intestine dispatch office, two cun out from the navel.',
-    { clsCite: '大腸募穴；足陽明與帶脈交會（《難經》）', note: 'Worksheet confirms the curriculum wording.' },
+    '天樞＝天的樞紐：以臍為腹部的中點，旁開 2 寸，大腸之氣在這裡集散。',
+    'Celestial Pivot: the turning hub 2 cun beside the navel, where the Large Intestine’s qi gathers.',
+    { clsCite: '大腸募穴；足陽明與帶脈交會（《難經》）', note: 'Memory cue reworded in project language on 2026-09-03; the handbook’s original metaphor is not reproduced.' },
   ),
   ST26: P(
     '在下腹部，臍中下 1 寸，前正中線旁開 2 寸。',
