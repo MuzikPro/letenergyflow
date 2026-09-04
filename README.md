@@ -51,8 +51,22 @@ npm run preview      # serve the production build (service worker active here)
 
 No account, no server, no analytics. Progress lives in this browser's
 `localStorage` and can be exported or erased from the Settings screen (⛭).
-The interface renders in a single language by default (following the device
-locale); 中文, English, or bilingual display can be chosen in Settings.
+
+Two language settings, and the split is a content rule rather than a
+preference. **Content display** chooses between the 中文 a claim was read in
+and this project's own English rendering of it (or both). **Interface
+language** translates the chrome — buttons, navigation, headings — into
+繁體中文, 简体中文, English, Français, Deutsch, Español, Italiano, Magyar,
+Русский or Українська, following the browser's language by default.
+
+Curated material never follows the interface setting. The 定位 location texts,
+point and channel names, classical quotations and the curriculum stay in the
+中文 they were read in and the English this project wrote, because a French or
+Russian rendering of a medical source is one nobody has read — inventing it is
+what `AGENTS.md` forbids outright. 简体 is produced from the 繁體 chrome by a
+hand-checked conversion table (`src/i18n/hans.ts`) that is cross-checked in
+tests against the dataset's own reviewed 繁/简 name pairs, and it is applied
+ONLY to strings in the generated chrome registry — never to a sourced string.
 The Latin display face is Source Serif 4 (SIL OFL 1.1 — licence at
 `public/fonts/OFL-Source-Serif-4.md`); CJK text uses system fonts.
 

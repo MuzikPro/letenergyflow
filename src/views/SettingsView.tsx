@@ -1,16 +1,26 @@
 import { useState } from 'react';
 import { useBilingual, useStore, type LangChoice, type ThemeChoice } from '../state/store';
+import { UI_LANGUAGES } from '../i18n/languages';
 
 /**
  * Settings — language, theme, and the learner's own data.
  *
  * Language labels are deliberately self-referential (中文 always in Chinese,
- * English always in English) so the control stays readable no matter which
- * language is currently active.
+ * Magyar always in Hungarian) so the control stays readable no matter which
+ * language is currently active — including for someone who has just set the
+ * interface to a language they cannot read and needs to find their way back.
+ *
+ * There are two language controls, and the split is a content rule rather
+ * than a preference: CONTENT DISPLAY chooses between the 中文 a claim was read
+ * in and this project's own English rendering of it, while INTERFACE LANGUAGE
+ * translates the chrome this project wrote. Sourced material is never machine
+ * -translated into a third language, and the section says so where the learner
+ * chooses, not in a footnote somewhere else.
  */
 export default function SettingsView({ onClose }: { onClose?: () => void }) {
   const t = useBilingual();
-  const { theme, setTheme, lang, setLang, resetProgress, exportProgress, setRoute } = useStore();
+  const { theme, setTheme, lang, setLang, uiLang, setUiLang, resetProgress, exportProgress, setRoute } =
+    useStore();
   const [confirmReset, setConfirmReset] = useState(false);
   const [exported, setExported] = useState(false);
 
@@ -68,6 +78,43 @@ export default function SettingsView({ onClose }: { onClose?: () => void }) {
               <span className="grow" style={{ minWidth: 0 }}>
                 <span style={{ display: 'block', fontWeight: 620 }}>{o.label}</span>
                 <span className="faint">{o.hint}</span>
+              </span>
+            </button>
+          ))}
+        </div>
+      </section>
+
+      <section className="panel stack">
+        <h2 style={{ fontSize: 18 }}>{t('介面語言', 'Interface language')}</h2>
+        <p className="faint" style={{ margin: 0 }}>
+          {t(
+            '介面文字（按鈕、導覽、標題）會依此設定翻譯。穴位定位、經絡名稱、古籍引文與課程內容一律維持中文與英文——那些是逐條照出處讀出來的，另行翻譯等同自行改寫醫學來源。',
+            'Chrome — buttons, navigation, headings — follows this setting. Location texts, point and channel names, classical quotations and the curriculum stay in 中文 and English: those were read out of cited sources, and translating them further would mean rewriting a medical source rather than reporting one.',
+          )}
+        </p>
+        <div className="stack" style={{ gap: 8 }}>
+          {UI_LANGUAGES.map((o) => (
+            <button
+              key={o.code}
+              type="button"
+              className="option"
+              aria-pressed={uiLang === o.code}
+              aria-label={o.englishName}
+              data-state={uiLang === o.code ? 'correct' : undefined}
+              onClick={() => setUiLang(o.code)}
+            >
+              <span className="marker" aria-hidden="true">
+                {uiLang === o.code ? '✓' : ''}
+              </span>
+              <span className="grow" style={{ minWidth: 0 }}>
+                <span style={{ display: 'block', fontWeight: 620 }} lang={o.code === 'auto' ? undefined : o.code}>
+                  {o.code === 'auto' ? t('跟隨內容語言', 'Follow content language') : o.endonym}
+                </span>
+                <span className="faint">
+                  {o.code === 'auto'
+                    ? t('與上方的內容顯示設定一致。', 'Match the content-display setting above.')
+                    : o.englishName}
+                </span>
               </span>
             </button>
           ))}

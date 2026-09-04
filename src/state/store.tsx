@@ -20,6 +20,9 @@ import {
   type ProgressState,
   type StorageAdapter,
 } from './progress';
+import { toHans } from '../i18n/hans';
+import { deviceUiLang, HTML_LANG, type UiLang } from '../i18n/languages';
+import { CHROME_KEYS, UI_STRINGS } from '../i18n/ui';
 
 export type ThemeChoice = 'system' | 'light' | 'dark';
 export type LangChoice = 'bi' | 'zh' | 'en';
@@ -113,6 +116,17 @@ const LEGACY_PREFS_KEY = 'let-energy-flow.prefs.v1';
 interface Prefs {
   theme: ThemeChoice;
   lang: LangChoice;
+  /**
+   * Interface language, separate from `lang` above on purpose.
+   *
+   * `lang` decides how CURATED CONTENT renders — the 定位 texts, the names,
+   * the classical quotations — and those exist only in the 中文 they were read
+   * in and this project's own English. `uiLang` decides the language of the
+   * chrome around them, which is this project's own writing and so may be
+   * translated. 'auto' means "follow `lang`", which is what the app did before
+   * interface languages existed: an existing learner sees no change.
+   */
+  uiLang: UiLang;
   /** Desktop rail collapsed to icons only. Persisted; the mobile drawer is not. */
   navCollapsed: boolean;
   /** Detail-sheet text size step, 0 (default, smallest) … 5 (largest). */
@@ -145,6 +159,7 @@ const defaultNavCollapsed = () =>
 const defaultPrefs: Prefs = {
   theme: 'system',
   lang: deviceLang(),
+  uiLang: deviceUiLang(typeof navigator !== 'undefined' ? navigator.language : undefined),
   fontScale: 0,
   navCollapsed: defaultNavCollapsed(),
 };
@@ -204,6 +219,8 @@ interface StoreValue {
   setTheme: (t: ThemeChoice) => void;
   lang: LangChoice;
   setLang: (l: LangChoice) => void;
+  uiLang: UiLang;
+  setUiLang: (l: UiLang) => void;
   fontScale: number;
   setFontScale: (n: number) => void;
   /** Desktop rail: collapsed to icons only. Persisted across sessions. */
@@ -384,6 +401,24 @@ export function StoreProvider({
     else root.setAttribute('data-theme', prefs.theme);
   }, [prefs.theme]);
 
+  /*
+   * Keep <html lang> honest.
+   *
+   * A screen reader picks its voice and its pronunciation rules from this
+   * attribute, so leaving it at the index.html default would have French
+   * chrome read aloud with English phonetics. 'auto' falls back to the
+   * content setting, which is the language the page is actually mostly in.
+   */
+  useEffect(() => {
+    const resolved =
+      prefs.uiLang !== 'auto'
+        ? HTML_LANG[prefs.uiLang]
+        : prefs.lang === 'zh' || prefs.lang === 'bi'
+          ? 'zh-Hant'
+          : 'en';
+    document.documentElement.lang = resolved;
+  }, [prefs.uiLang, prefs.lang]);
+
   const answer = useCallback<StoreValue['answer']>((args) => {
     setProgress((prev) => recordAnswer(prev, args));
   }, []);
@@ -435,6 +470,8 @@ export function StoreProvider({
       setTheme: (theme) => setPrefs((p) => ({ ...p, theme })),
       lang: prefs.lang,
       setLang: (lang) => setPrefs((p) => ({ ...p, lang })),
+      uiLang: prefs.uiLang,
+      setUiLang: (uiLang) => setPrefs((p) => ({ ...p, uiLang })),
       fontScale: prefs.fontScale,
       setFontScale: (n) => setPrefs((p) => ({ ...p, fontScale: Math.min(5, Math.max(0, n)) })),
       navCollapsed: prefs.navCollapsed,
@@ -484,16 +521,53 @@ export function useStore(): StoreValue {
 
 /** Bilingual text helper honouring the language preference. */
 export function useBilingual() {
-  const { lang } = useStore();
+  const { lang, uiLang } = useStore();
   return useCallback(
     (zh: string | null | undefined, en: string | null | undefined): string => {
       const z = zh?.trim() ?? '';
       const e = en?.trim() ?? '';
+      /*
+       * The interface language is consulted FIRST, and only for strings the
+       * translation table actually carries.
+       *
+       * That last clause is what makes this safe to put in the shared helper.
+       * `t()` is called both with chrome literals and with content pulled off
+       * a record — `t(point.nameZhHant, point.nameEn)`. A content string is
+       * not a key in the table, so it misses and falls through to the
+       * content-display rules below, exactly as before. Chrome gets
+       * translated; sourced material keeps the two languages it was written
+       * and reviewed in. Nothing here can invent a translation of a source,
+       * because nothing here can produce a string that is not already either
+       * in the table or in the record.
+       */
+      if (uiLang !== 'auto') {
+        if (uiLang === 'zh-Hant') {
+          if (z) return z;
+        } else if (uiLang === 'zh-Hans') {
+          /*
+           * Only registered chrome is converted. A curated 中文 string keeps
+           * the characters its source used: the conversion table covers the
+           * chrome's vocabulary and nothing else, so running a 定位 text
+           * through it would simplify the words it happens to know and leave
+           * the rest — 「肺经共 11 穴 … 太淵」 — which is a sentence in neither
+           * script and an edit to a source nobody reviewed.
+           */
+          if (z) return CHROME_KEYS.has(e) ? toHans(z) : z;
+        } else if (uiLang === 'en') {
+          if (e) return e;
+        } else {
+          const table = UI_STRINGS[uiLang];
+          const hit = e && table ? table[e] : undefined;
+          if (hit) return hit;
+          /* No entry yet: English is the honest fallback, not a guess. */
+          if (e) return e;
+        }
+      }
       if (lang === 'zh') return z || e;
       if (lang === 'en') return e || z;
       if (z && e && z !== e) return `${z} · ${e}`;
       return z || e;
     },
-    [lang],
+    [lang, uiLang],
   );
 }
