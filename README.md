@@ -1,4 +1,4 @@
-# Let Energy Flow · 讓氣運行
+# Let Energy Flow · 炁流
 
 A local-first, offline, installable web app for memorising the TCM meridian
 system and its 362 acupoints — the twelve regular channels, 任脈 and 督脈, and
