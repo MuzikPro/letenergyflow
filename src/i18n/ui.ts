@@ -245,6 +245,12 @@ const fr: Table = {
   matched: 'correspondance',
   'not on this side': 'pas de ce côté',
   'off-channel': 'hors méridien',
+  'Card {n} of {total}': 'Carte {n} sur {total}',
+  '{n} strong': '{n} maîtrisées',
+  '{n} due': '{n} à réviser',
+  '{n} of {total}': '{n} sur {total}',
+  'Question {n} of {total}': 'Question {n} sur {total}',
+  '{right}/{total} so far': '{right}/{total} jusqu’ici',
 };
 
 const de: Table = {
@@ -467,6 +473,12 @@ const de: Table = {
   matched: 'Treffer',
   'not on this side': 'nicht auf dieser Seite',
   'off-channel': 'meridianfremd',
+  'Card {n} of {total}': 'Karte {n} von {total}',
+  '{n} strong': '{n} sicher',
+  '{n} due': '{n} fällig',
+  '{n} of {total}': '{n} von {total}',
+  'Question {n} of {total}': 'Frage {n} von {total}',
+  '{right}/{total} so far': '{right}/{total} bisher',
 };
 
 const es: Table = {
@@ -689,6 +701,12 @@ const es: Table = {
   matched: 'coincidencia',
   'not on this side': 'no está en este lado',
   'off-channel': 'fuera del meridiano',
+  'Card {n} of {total}': 'Tarjeta {n} de {total}',
+  '{n} strong': '{n} dominadas',
+  '{n} due': '{n} pendientes',
+  '{n} of {total}': '{n} de {total}',
+  'Question {n} of {total}': 'Pregunta {n} de {total}',
+  '{right}/{total} so far': '{right}/{total} hasta ahora',
 };
 
 const it: Table = {
@@ -911,6 +929,12 @@ const it: Table = {
   matched: 'corrispondenza',
   'not on this side': 'non su questo lato',
   'off-channel': 'fuori meridiano',
+  'Card {n} of {total}': 'Scheda {n} di {total}',
+  '{n} strong': '{n} consolidate',
+  '{n} due': '{n} da ripassare',
+  '{n} of {total}': '{n} di {total}',
+  'Question {n} of {total}': 'Domanda {n} di {total}',
+  '{right}/{total} so far': '{right}/{total} finora',
 };
 
 const hu: Table = {
@@ -1133,6 +1157,12 @@ const hu: Table = {
   matched: 'egyezés',
   'not on this side': 'ezen az oldalon nincs',
   'off-channel': 'meridiánon kívüli',
+  'Card {n} of {total}': '{n}. kártya / {total}',
+  '{n} strong': '{n} biztos',
+  '{n} due': '{n} esedékes',
+  '{n} of {total}': '{n} / {total}',
+  'Question {n} of {total}': '{n}. kérdés / {total}',
+  '{right}/{total} so far': '{right}/{total} eddig',
 };
 
 const ru: Table = {
@@ -1355,6 +1385,12 @@ const ru: Table = {
   matched: 'совпадение',
   'not on this side': 'нет на этой стороне',
   'off-channel': 'вне меридиана',
+  'Card {n} of {total}': 'Карточка {n} из {total}',
+  '{n} strong': '{n} освоено',
+  '{n} due': '{n} к повторению',
+  '{n} of {total}': '{n} из {total}',
+  'Question {n} of {total}': 'Вопрос {n} из {total}',
+  '{right}/{total} so far': '{right}/{total} на данный момент',
 };
 
 const uk: Table = {
@@ -1577,6 +1613,12 @@ const uk: Table = {
   matched: 'збіг',
   'not on this side': 'немає з цього боку',
   'off-channel': 'поза меридіаном',
+  'Card {n} of {total}': 'Картка {n} з {total}',
+  '{n} strong': '{n} засвоєно',
+  '{n} due': '{n} до повторення',
+  '{n} of {total}': '{n} з {total}',
+  'Question {n} of {total}': 'Запитання {n} з {total}',
+  '{right}/{total} so far': '{right}/{total} наразі',
 };
 
 /**
