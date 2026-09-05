@@ -571,3 +571,18 @@ export function useBilingual() {
     [lang, uiLang],
   );
 }
+
+/** Fill a registered chrome pattern after language selection and conversion. */
+export function fillTemplate(pattern: string, values: Record<string, string | number>): string {
+  return pattern.replace(/\{(\w+)\}/g, (whole, name: string) => (name in values ? String(values[name]) : whole));
+}
+
+/** Bilingual chrome helper for stable, named-placeholder patterns. */
+export function useBilingualTemplate() {
+  const t = useBilingual();
+  return useCallback(
+    (zhPattern: string, enPattern: string, values: Record<string, string | number>): string =>
+      fillTemplate(t(zhPattern, enPattern), values),
+    [t],
+  );
+}
