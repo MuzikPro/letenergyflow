@@ -299,6 +299,21 @@ button {
   align-items: baseline;
   gap: 8px;
   min-width: 0;
+  /* It is a link now, and must not look like body copy that happens to be one:
+     no underline, the wordmark's own colour, and a pointer to say it acts. */
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: color 120ms ease;
+}
+.brand:hover strong {
+  color: var(--accent);
+}
+@media (prefers-reduced-motion: reduce) {
+  .brand {
+    transition: none;
+  }
 }
 .brand strong {
   font-family: var(--font-display);

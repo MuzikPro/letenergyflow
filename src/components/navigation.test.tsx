@@ -156,3 +156,58 @@ describe('returning to the same reading', () => {
     await waitFor(() => expect(screen.getByTestId('mode').textContent).toBe('line'));
   });
 });
+
+/**
+ * The wordmark as the way home.
+ *
+ * A logo that goes home is a convention learners already have, so the value is
+ * in it behaving like the link it looks like — including for the people who
+ * ⌘-click it, and for the ones who never touch a mouse.
+ */
+describe('the wordmark goes home', () => {
+  const brand = () => document.querySelector('a.brand') as HTMLAnchorElement;
+
+  it('returns to the atlas from anywhere in the app', () => {
+    render(wrap(<App />));
+    // Leave home first, or the assertion proves nothing.
+    fireEvent.click(screen.getByRole('button', { name: /Progress|進度/ }));
+    expect(window.location.pathname).toBe('/progress');
+
+    fireEvent.click(brand());
+    expect(window.location.pathname).toBe('/');
+    expect(document.querySelector('.viewer-legend')).toBeTruthy();
+  });
+
+  it('is a real link, so it can be opened in a new tab', () => {
+    render(wrap(<App />));
+    const a = brand();
+    expect(a.tagName).toBe('A');
+    expect(a.getAttribute('href')).toBe('/');
+    // Named for what it does, not just what it says.
+    expect(a.getAttribute('aria-label')).toMatch(/home|首頁/);
+  });
+
+  it('leaves a ⌘-click to the browser instead of hijacking it', () => {
+    render(wrap(<App />));
+    fireEvent.click(screen.getByRole('button', { name: /Progress|進度/ }));
+    expect(window.location.pathname).toBe('/progress');
+
+    /*
+     * The point of using an anchor: a modified click means "open this
+     * elsewhere". Swallowing it would break the one behaviour the anchor was
+     * chosen for, so the handler must not navigate this tab.
+     */
+    const ev = new MouseEvent('click', { bubbles: true, cancelable: true, metaKey: true });
+    brand().dispatchEvent(ev);
+    expect(ev.defaultPrevented).toBe(false);
+    expect(window.location.pathname).toBe('/progress');
+  });
+
+  it('adds no history entry when it is clicked at home', () => {
+    render(wrap(<App />));
+    const before = window.history.length;
+    fireEvent.click(brand());
+    expect(window.location.pathname).toBe('/');
+    expect(window.history.length).toBe(before);
+  });
+});

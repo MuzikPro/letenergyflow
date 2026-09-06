@@ -26,6 +26,8 @@ import type { UiLang } from './languages';
 type Table = Record<string, string>;
 
 const fr: Table = {
+  'Let Energy Flow — home': 'Let Energy Flow — accueil',
+  'Go to the home page': 'Retour à l’accueil',
   'Meridian layers': 'Calques des méridiens',
   'Lines': 'Lignes',
   'Network': 'Réseau',
@@ -248,6 +250,8 @@ const fr: Table = {
 };
 
 const de: Table = {
+  'Let Energy Flow — home': 'Let Energy Flow — Startseite',
+  'Go to the home page': 'Zur Startseite',
   'Meridian layers': 'Meridian-Ebenen',
   'Lines': 'Linien',
   'Network': 'Netz',
@@ -470,6 +474,8 @@ const de: Table = {
 };
 
 const es: Table = {
+  'Let Energy Flow — home': 'Let Energy Flow — inicio',
+  'Go to the home page': 'Ir a la página de inicio',
   'Meridian layers': 'Capas de meridianos',
   'Lines': 'Líneas',
   'Network': 'Red',
@@ -692,6 +698,8 @@ const es: Table = {
 };
 
 const it: Table = {
+  'Let Energy Flow — home': 'Let Energy Flow — home',
+  'Go to the home page': 'Vai alla pagina iniziale',
   'Meridian layers': 'Livelli dei meridiani',
   'Lines': 'Linee',
   'Network': 'Rete',
@@ -914,6 +922,8 @@ const it: Table = {
 };
 
 const hu: Table = {
+  'Let Energy Flow — home': 'Let Energy Flow — kezdőlap',
+  'Go to the home page': 'Ugrás a kezdőlapra',
   'Meridian layers': 'Meridián-rétegek',
   'Lines': 'Vonalak',
   'Network': 'Hálózat',
@@ -1136,6 +1146,8 @@ const hu: Table = {
 };
 
 const ru: Table = {
+  'Let Energy Flow — home': 'Let Energy Flow — главная',
+  'Go to the home page': 'На главную страницу',
   'Meridian layers': 'Слои меридианов',
   'Lines': 'Линии',
   'Network': 'Сеть',
@@ -1358,6 +1370,8 @@ const ru: Table = {
 };
 
 const uk: Table = {
+  'Let Energy Flow — home': 'Let Energy Flow — головна',
+  'Go to the home page': 'На головну сторінку',
   'Meridian layers': 'Шари меридіанів',
   'Lines': 'Лінії',
   'Network': 'Мережа',

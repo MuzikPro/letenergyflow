@@ -76,6 +76,9 @@ function RouteIcon({ id }: { id: NavRouteId }) {
   );
 }
 
+/** Where the wordmark points. The atlas is the app's home route. */
+const PATH_OF_HOME = '/';
+
 export default function App() {
   const {
     route,
@@ -161,7 +164,28 @@ export default function App() {
               <span className="back-btn-label">{t(ROUTE_LABEL[backTo].zh, ROUTE_LABEL[backTo].en)}</span>
             </button>
           )}
-          <div className="brand">
+          {/*
+            * The wordmark goes home, the way a wordmark is expected to.
+            *
+            * A real <a href="/"> rather than a button, because the app has real
+            * URLs: ⌘-click opens the atlas in a new tab, the status bar shows
+            * where it leads, and it is announced as a link. Plain left clicks
+            * are intercepted so navigation stays client-side; modified clicks
+            * and middle clicks are left alone for the browser to handle.
+            * `setRoute` already no-ops when the atlas is the current route, so
+            * clicking it at home adds no history entry.
+            */}
+          <a
+            className="brand"
+            href={PATH_OF_HOME}
+            aria-label={t('Let Energy Flow — 回到首頁', 'Let Energy Flow — home')}
+            title={t('回到首頁', 'Go to the home page')}
+            onClick={(e) => {
+              if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+              e.preventDefault();
+              setRoute('atlas');
+            }}
+          >
             <strong>Let Energy Flow</strong>
             {/* Derived, so it cannot go stale when a curriculum day is added. */}
             <span>
@@ -170,7 +194,7 @@ export default function App() {
                 `Days 1–${dataset.curriculumDays.length} · prototype`,
               )}
             </span>
-          </div>
+          </a>
           <button type="button" className="search-trigger" onClick={() => setSearchOpen(true)}>
             <span aria-hidden="true">⌕</span>
             <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
