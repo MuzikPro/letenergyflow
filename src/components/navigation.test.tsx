@@ -178,6 +178,15 @@ describe('the wordmark goes home', () => {
     expect(document.querySelector('.viewer-legend')).toBeTruthy();
   });
 
+  it('carries the 炁流 mark inside the link, in every interface language', () => {
+    render(wrap(<App />));
+    const mark = brand().querySelector('.brand-mark');
+    expect(mark?.textContent).toBe('炁流');
+    // A name, not chrome: it is never translated and never simplified, so it
+    // must not be a key any translation table could claim.
+    expect(mark?.getAttribute('aria-hidden')).toBe('true');
+  });
+
   it('is a real link, so it can be opened in a new tab', () => {
     render(wrap(<App />));
     const a = brand();

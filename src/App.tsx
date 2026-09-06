@@ -187,6 +187,15 @@ export default function App() {
             }}
           >
             <strong>Let Energy Flow</strong>
+            {/*
+              * 炁流 is the project's Chinese mark, so it is shown in every
+              * interface language and never translated — a name is not chrome.
+              * It sits inside the link, which makes the whole wordmark, both
+              * scripts, the way home.
+              */}
+            <b className="brand-mark" aria-hidden="true">
+              炁流
+            </b>
             {/* Derived, so it cannot go stale when a curriculum day is added. */}
             <span>
               {t(

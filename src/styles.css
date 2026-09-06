@@ -310,6 +310,18 @@ button {
 .brand:hover strong {
   color: var(--accent);
 }
+/* The Chinese mark: the accent colour it is drawn in on the social card, at a
+   size that sits on the Latin wordmark's baseline rather than towering over
+   it — CJK glyphs read larger than Latin at the same point size. */
+.brand-mark {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--accent);
+  white-space: nowrap;
+  flex: none;
+}
 @media (prefers-reduced-motion: reduce) {
   .brand {
     transition: none;
@@ -327,6 +339,9 @@ button {
 @media (max-width: 520px) {
   .brand span {
     display: none;
+  }
+  .brand-mark {
+    font-size: 14px;
   }
   .brand {
     flex: none;
