@@ -18,6 +18,7 @@ import { UI_LANGUAGES, deviceUiLang, HTML_LANG, type UiLang } from './languages'
 import { toHans, T2S_TABLE } from './hans';
 import { CHROME_KEYS_GENERATED } from './chrome-keys';
 import { dataset } from '../data/index';
+import { fillTemplate } from '../state/store';
 
 const TRANSLATED = ['fr', 'de', 'es', 'it', 'hu', 'ru', 'uk'] as const;
 
@@ -44,7 +45,7 @@ function sourceFiles(dir: string): string[] {
 /** Every `t('中文', 'English')` literal pair in the app. */
 function chromePairs(): { zh: string; en: string }[] {
   const out: { zh: string; en: string }[] = [];
-  const re = /\bt\(\s*'((?:[^'\\]|\\.)*)'\s*,\s*'((?:[^'\\]|\\.)*)'\s*[,)]/g;
+  const re = /\b(?:t|tf)\(\s*'((?:[^'\\]|\\.)*)'\s*,\s*'((?:[^'\\]|\\.)*)'\s*[,)]/g;
   for (const file of UI_ROOTS.flatMap(sourceFiles)) {
     const text = readFileSync(file, 'utf8') as string;
     for (const m of text.matchAll(re)) out.push({ zh: m[1]!, en: m[2]! });
@@ -184,6 +185,13 @@ describe('simplified Chinese — conversion, not invention', () => {
     expect('淵' in T2S_TABLE).toBe(false);
     const taiyuan = dataset.acupoints.find((p) => p.code === 'LU9');
     expect(taiyuan?.nameZhHans).toBe('太渊');
+  });
+});
+
+describe('chrome templates', () => {
+  it('fills placeholders by name after conversion, leaving values untouched', () => {
+    expect(fillTemplate('Question {n} of {total}', { total: 9, n: 2 })).toBe('Question 2 of 9');
+    expect(fillTemplate(toHans('第 {name} 題'), { name: '經' })).toBe('第 經 题');
   });
 });
 
