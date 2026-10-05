@@ -57,9 +57,9 @@ Everything here is done.
 - [x] Fonts self-hosted under OFL, licence kept beside the file
 - [x] 646 tests, typecheck, and both builds green
 
-Operationally: set `TESTER_CREDENTIALS` per `TESTER-GATE.md`, deploy
-`build:shared`, and confirm the deployed bundle is the stripped one before
-sending anyone a login.
+Operationally: restore the staging middleware and its dependency, then set
+`TESTER_CREDENTIALS` per `TESTER-GATE.md`, deploy `build:shared`, and confirm
+the deployed bundle is the stripped one before sending anyone a login.
 
 ## Gate 2 — ungated public release
 
@@ -121,7 +121,7 @@ Do not describe the app as expert-reviewed. Nothing in it is, yet.
 
 ## How Vercel is held to it
 
-`app/vercel.json` sets `buildCommand` to `npm run build:shared`, so the shared
+`vercel.json` sets `buildCommand` to `npm run build:shared`, so the shared
 build is not a thing anyone has to remember — it is the only build the platform
 knows how to run for this project.
 

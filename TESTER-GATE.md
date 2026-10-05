@@ -5,10 +5,15 @@ the app exactly as it is today.
 
 ## How it works
 
-`app/middleware.ts` runs in Vercel's routing middleware — at the edge, **before
-any file is served** — and demands HTTP Basic credentials. The logic is in
-`src/auth/gate.ts` so it can be unit-tested; the middleware file is a thin
-wrapper around it.
+The public deployment is **ungated**. For a private staging copy, restore the
+thin `middleware.ts` wrapper at the repository root from git history, before
+its removal in commit `4c9ce10`, and restore its `@vercel/functions` dependency.
+The gate logic still lives in `src/auth/gate.ts` so it can be unit-tested.
+
+Once restored, the wrapper runs in Vercel's routing middleware — at the edge,
+**before any file is served** — and demands HTTP Basic credentials. The setup
+and access controls below apply to that private staging deployment; setting
+credentials alone does not gate the public app.
 
 Credentials live in one environment variable, `TESTER_CREDENTIALS`, as
 `user:sha256,user:sha256,…`. Only digests are stored. Nothing reaches the
@@ -16,14 +21,15 @@ browser.
 
 ## Setting it up
 
-1. Generate the logins:
+1. With the wrapper and its dependency restored, generate the logins from the
+   repository root:
 
-       cd app && npx tsx scripts/make-tester-credentials.ts 5
+       npx tsx scripts/make-tester-credentials.ts 5
 
    It prints the plaintext to hand out and the variable value to paste. It
    writes nothing to disk, so the passwords cannot be committed by accident.
 
-2. In Vercel → the project → **Settings → Environment Variables**, add
+2. In Vercel → the private staging project → **Settings → Environment Variables**, add
    **one** variable — `TESTER_CREDENTIALS`, type Secret, with the printed value,
    applied to **Production, Preview and Development**.
 
