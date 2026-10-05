@@ -3,7 +3,7 @@ import Atlas from '../components/Atlas';
 import { acupointById, dataset } from '../data';
 import { levelPhrase, pairDrill } from '../data/pair-drill';
 import { dueQueue, masteryBreakdown } from '../state/progress';
-import { useBilingual, useStore } from '../state/store';
+import { useBilingual, useBilingualTemplate, useStore } from '../state/store';
 
 type Tab = 'flashcards' | 'locate' | 'quiz' | 'pairs';
 
@@ -58,6 +58,7 @@ export default function PracticeView() {
 
 function Flashcards() {
   const t = useBilingual();
+  const tf = useBilingualTemplate();
   const { progress, answer, setFocus, setRoute } = useStore();
   const [revealed, setRevealed] = useState(false);
   const [index, setIndex] = useState(0);
@@ -94,12 +95,12 @@ function Flashcards() {
     <div className="stack">
       <div className="row faint">
         <span>
-          {t(`第 ${(index % queue.length) + 1}／${queue.length} 張`, `Card ${(index % queue.length) + 1} of ${queue.length}`)}
+          {tf('第 {n}／{total} 張', 'Card {n} of {total}', { n: (index % queue.length) + 1, total: queue.length })}
         </span>
         <span>·</span>
         <span>
-          {t(`熟練 ${stats.strong}`, `${stats.strong} strong`)} ·{' '}
-          {t(`待複習 ${stats.dueNow}`, `${stats.dueNow} due`)}
+          {tf('熟練 {n}', '{n} strong', { n: stats.strong })} ·{' '}
+          {tf('待複習 {n}', '{n} due', { n: stats.dueNow })}
         </span>
       </div>
 
@@ -162,6 +163,7 @@ function Flashcards() {
 
 function Locate() {
   const t = useBilingual();
+  const tf = useBilingualTemplate();
   const { answer } = useStore();
   const items = useMemo(() => dataset.quizItems.filter((q) => q.kind === 'locate_point'), []);
   const [index, setIndex] = useState(0);
@@ -190,7 +192,7 @@ function Locate() {
     <div className="stack">
       <div className="panel stack" style={{ gap: 8 }}>
         <div className="eyebrow">
-          {t(`第 ${(index % items.length) + 1}／${items.length} 題`, `${(index % items.length) + 1} of ${items.length}`)}
+          {tf('第 {n}／{total} 題', '{n} of {total}', { n: (index % items.length) + 1, total: items.length })}
         </div>
         <h2 style={{ fontSize: 19 }}>{t(item.promptZhHant, item.promptEn)}</h2>
         {picked && (
@@ -249,6 +251,7 @@ function Locate() {
 
 function Quiz() {
   const t = useBilingual();
+  const tf = useBilingualTemplate();
   const { answer, setFocus, setRoute } = useStore();
   const items = useMemo(() => dataset.quizItems.filter((q) => q.kind === 'multiple_choice'), []);
   const [index, setIndex] = useState(0);
@@ -305,8 +308,8 @@ function Quiz() {
   return (
     <div className="stack">
       <div className="faint">
-        {t(`第 ${index + 1}／${items.length} 題`, `Question ${index + 1} of ${items.length}`)} ·{' '}
-        {t(`目前 ${score.right}／${score.total}`, `${score.right}/${score.total} so far`)}
+        {tf('第 {n}／{total} 題', 'Question {n} of {total}', { n: index + 1, total: items.length })} ·{' '}
+        {tf('目前 {right}／{total}', '{right}/{total} so far', score)}
       </div>
 
       <div className="panel stack">
@@ -395,6 +398,7 @@ function Quiz() {
  */
 function PairDrill() {
   const t = useBilingual();
+  const tf = useBilingualTemplate();
   const { answer, setFocus, setRoute } = useStore();
   const deck = useMemo(() => pairDrill(), []);
   const [index, setIndex] = useState(0);
@@ -463,8 +467,8 @@ function PairDrill() {
   return (
     <div className="stack">
       <div className="faint">
-        {t(`第 ${index + 1}／${deck.length} 題`, `Question ${index + 1} of ${deck.length}`)} ·{' '}
-        {t(`目前 ${score.right}／${score.total}`, `${score.right}/${score.total} so far`)}
+        {tf('第 {n}／{total} 題', 'Question {n} of {total}', { n: index + 1, total: deck.length })} ·{' '}
+        {tf('目前 {right}／{total}', '{right}/{total} so far', score)}
       </div>
 
       <div className="panel stack">

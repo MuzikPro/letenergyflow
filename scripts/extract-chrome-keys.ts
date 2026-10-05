@@ -4,8 +4,9 @@
  *     npx tsx scripts/extract-chrome-keys.ts
  *
  * Chrome is defined mechanically rather than by judgement: a string is chrome
- * when it appears as a LITERAL pair in a `t('中文', 'English')` call inside the
- * UI code (App.tsx, components/, views/). Curated content never appears that
+ * when it appears as a LITERAL pair in a `t('中文', 'English')` or
+ * `tf('中文 {name}', 'English {name}', values)` call inside the UI code
+ * (App.tsx, components/, views/). Curated content never appears that
  * way — it lives in `src/data` as records and reaches `t()` through variables
  * — so the two sets cannot overlap by accident. `i18n.test.ts` re-runs this
  * extraction and fails if the checked-in file has drifted, which is what keeps
@@ -18,7 +19,7 @@ import { readdirSync, readFileSync, statSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 
 const UI_ROOTS = ['src/App.tsx', 'src/components', 'src/views'];
-const PAIR = /\bt\(\s*'((?:[^'\\]|\\.)*)'\s*,\s*'((?:[^'\\]|\\.)*)'\s*[,)]/g;
+const PAIR = /\b(?:t|tf)\(\s*'((?:[^'\\]|\\.)*)'\s*,\s*'((?:[^'\\]|\\.)*)'\s*[,)]/g;
 
 function files(path: string): string[] {
   if (statSync(path).isFile()) return /\.tsx?$/.test(path) && !path.includes('.test.') ? [path] : [];
